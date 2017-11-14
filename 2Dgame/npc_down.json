@@ -1,0 +1,6 @@
+[
+{"texture":"character_sprite2.png","x":256,"y":192,"width":32,"height":48,"framedelay":0.2},
+{"texture":"character_sprite2.png","x":288,"y":192,"width":32,"height":48,"framedelay":0.2},
+{"texture":"character_sprite2.png","x":320,"y":192,"width":32,"height":48,"framedelay":0.2},
+{"texture":"character_sprite2.png","x":352,"y":192,"width":32,"height":48,"framedelay":0.2}
+]

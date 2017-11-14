@@ -1,0 +1,6 @@
+[
+{"texture":"monster.png","x":0,"y":96,"width":32,"height":32,"framedelay":0.2},
+{"texture":"monster.png","x":32,"y":96,"width":32,"height":32,"framedelay":0.2},
+{"texture":"monster.png","x":64,"y":96,"width":32,"height":32,"framedelay":0.2},
+{"texture":"monster.png","x":32,"y":96,"width":32,"height":32,"framedelay":0.2}
+]

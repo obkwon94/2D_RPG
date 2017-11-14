@@ -1,0 +1,6 @@
+[
+{"texture":"npc.png","x":256,"y":336,"width":32,"height":48,"framedelay":0.2},
+{"texture":"npc.png","x":288,"y":336,"width":32,"height":48,"framedelay":0.2},
+{"texture":"npc.png","x":320,"y":336,"width":32,"height":48,"framedelay":0.2},
+{"texture":"npc.png","x":352,"y":336,"width":32,"height":48,"framedelay":0.2}
+]
