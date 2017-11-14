@@ -1,12 +1,14 @@
 #include "ComponentSystem.h"
 #include "ComponentMessage.h"
-#include "Sprite.h"
-#include "Character.h"
 #include "Map.h"
+#include "Sprite.h"
+#include "MoveState.h"
+#include "Character.h"
+
 
 Character::Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFileName) : Component(name)
 {
-
+	_state = new MoveState();
 	_spriteList.clear();
 	_moveTime = 1.0f;
 	_scriptName = scriptName;
@@ -18,7 +20,7 @@ Character::Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFileName) 
 
 Character::~Character()
 {
-
+	delete _state;
 }
 
 void Character::Init()
@@ -86,7 +88,8 @@ void Character::Update(float deltaTime)
 	_spriteList[(int)_currentDirection]->Update(deltaTime);
 
 	UpdateAI(deltaTime);
-	UpadateMove(deltaTime);
+	//UpadateMove(deltaTime);
+	_state->Update(deltaTime);
 }
 
 void Character::Render()
@@ -128,18 +131,17 @@ void Character::UpdateAI(float deltaTime)
 	if (false == _isLive)
 		return;
 
-	if (false == _isMoving)
+	if (false == _state->isMoving())
 	{
-		int direction = rand() % 4;
-		MoveStart((eDirection)direction);
+		_currentDirection = (eDirection)(rand() % 4);
+		_state->Start();
 	}
 }
 
 void Character::InitMove()
 {
-	_isMoving = false;
-	
-	_movingDuration = 0.0f;
+	_state->Init(this);
+
 	_currentDirection = eDirection::DOWN;
 	_targetX = 0.0f;
 	_targetY = 0.0f;
@@ -148,51 +150,9 @@ void Character::InitMove()
 
 }
 
-void Character::MoveStart(eDirection direction)
+void Character::MoveStart(int newTileX, int newTileY)
 {
-	if (true == _isMoving)
-		return;
-
-	_currentDirection = direction;
-
 	Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
-	map->ResetTileComponent(_tileX, _tileY, this);
-	
-	int newTileX = _tileX;
-	int newTileY = _tileY;
-	
-	switch (direction)
-	{
-	case eDirection::LEFT:			//left
-		newTileX--;
-		if (newTileX < 0)
-			newTileX = 0;
-		break;
-	case eDirection::RIGHT:			//right
-		newTileX++;
-		if (49 < newTileX)
-			newTileX = 49;
-		break;
-	case eDirection::UP:			//up
-		newTileY--;
-		if (newTileY < 0)
-			newTileY = 0;
-		break;
-	case eDirection::DOWN:			//down
-		newTileY++;
-		if (49 < newTileY)
-			newTileY = 49;
-		break;
-	}
-	
-	std::list<Component*> collisionList;
-	bool canMove = map->GetTileCollisionList(newTileX, newTileY, collisionList);
-	if (false == canMove)
-	{
-		Collision(collisionList);
-		return;
-	}
-	
 	map->ResetTileComponent(_tileX, _tileY, this);
 
 	_x = map->GetPositionX(_tileX, _tileY);
@@ -218,21 +178,14 @@ void Character::MoveStart(eDirection direction)
 		_moveDistancePerTimeX = distanceX / _moveTime;
 		_moveDistancePerTimeY = distanceY / _moveTime;
 	}
-	_isMoving = true;
+	//_state->SetMoving(true);
 }
 
 void Character::UpadateMove(float deltaTime)
 {
-	if (false == _isLive)
-		return;
-
-	if (false == _isMoving)
-		return;
-
-	if (_moveTime <= _movingDuration)
+	if (_moveTime <= _state->GetMovingDuration())
 	{
-		_movingDuration = 0.0f;
-		_isMoving = false;
+		_state->Stop();
 
 		Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
 		_x = map->GetPositionX(_tileX, _tileY);
@@ -243,7 +196,7 @@ void Character::UpadateMove(float deltaTime)
 	}
 	else
 	{
-		_movingDuration += deltaTime;
+		_state->UpdateMove(deltaTime);
 
 		float moveDistanceX = _moveDistancePerTimeX * deltaTime;
 		float moveDistanceY = _moveDistancePerTimeY * deltaTime;
@@ -261,11 +214,10 @@ void Character::Collision(std::list<Component*>& collisionList)
 		msgParam.sender = this;
 		msgParam.message = L"Collision";
 		msgParam.receiver = (*it);
-		//ComponentSystem::GetInstance()->SendMsg(L"Collision", (*it), msgParam);
 		ComponentSystem::GetInstance()->SendMsg(msgParam);
 	}
 }
-//void Character::ReceiveMessage(std::wstring message, const sComponentMsgParam& msgParam)
+
 void Character::ReceiveMessage(const sComponentMsgParam& msgParam)
 {
 	if (false == _isLive)

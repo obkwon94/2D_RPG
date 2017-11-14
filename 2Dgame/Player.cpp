@@ -1,6 +1,7 @@
 #include "ComponentSystem.h"
 #include "GameSystem.h"
 #include "Map.h"
+#include "MoveState.h"
 #include "Player.h"
 
 Player::Player(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFileName) : Character(name, scriptName, textureFileName)
@@ -19,53 +20,38 @@ void Player::UpdateAI(float deltaTime)
 	if (false == _isLive)
 		return;
 
-	if (false == _isMoving)
+	if (false == _state->isMoving())
 	{
+		eDirection direction = eDirection::NONE;
 		if (GameSystem::GetInstance()->IsKeyDown(VK_UP))
 		{
-			MoveStart(eDirection::UP);
+			//MoveStart(eDirection::UP);
+			direction = eDirection::UP;
 		}
 
 		if (GameSystem::GetInstance()->IsKeyDown(VK_DOWN))
 		{
-			MoveStart(eDirection::DOWN);
+			//MoveStart(eDirection::DOWN);
+			direction = eDirection::DOWN;
 		}
 
 		if (GameSystem::GetInstance()->IsKeyDown(VK_LEFT))
 		{
-			MoveStart(eDirection::LEFT);
+			//MoveStart(eDirection::LEFT);
+			direction = eDirection::LEFT;
 		}
 
 		if (GameSystem::GetInstance()->IsKeyDown(VK_RIGHT))
 		{
-			MoveStart(eDirection::RIGHT);
+			//MoveStart(eDirection::RIGHT);
+			direction = eDirection::RIGHT;
+		}
+
+		if (eDirection::NONE != direction)
+		{
+			_currentDirection = direction;
+			//MoveStart();
+			_state->Start();
 		}
 	}
 }
-/*
-void Player::UpadateMove(float deltaTime)
-{
-	if (false == _isMoving)
-	{
-		return;
-	}
-
-	if (_moveTime <= _movingDuration)
-	{
-		_movingDuration = 0.0f;
-		_isMoving = false;
-
-		_moveDistancePerTimeX = 0.0f;
-		_moveDistancePerTimeY = 0.0f;
-	}
-	else
-	{
-		_movingDuration += deltaTime;
-	}
-}
-
-void Player::MoveDeltaPosition(float deltaX, float deltaY)
-{
-
-}
-*/

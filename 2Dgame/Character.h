@@ -5,7 +5,16 @@
 #include "Component.h"
 
 class Sprite;
+class MoveState;
 
+enum eDirection
+{
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN,
+	NONE
+};
 
 class Character : public Component
 {
@@ -41,26 +50,24 @@ public:
 
 	//move
 protected:
+	/*
 	bool _isMoving;
-	float _moveTime;
 	float _movingDuration;
+	*/
+	float _moveTime;
+	MoveState* _state;
 
 	float _targetX;
 	float _targetY;
 
-	enum eDirection
-	{
-		LEFT,
-		RIGHT,
-		UP,
-		DOWN,
-		NONE
-	};
+	
 	eDirection _currentDirection;
 public:
 	void InitMove();
-	void MoveStart(eDirection direction);
-	virtual void UpadateMove(float deltaTime);
+	void MoveStart(int newTileX, int newTileY);
+	void UpadateMove(float deltaTime);
+
+	eDirection GetDirection() { return _currentDirection; }
 	virtual void Collision(std::list<Component*>& collisionList);
 
 	//Action
@@ -69,7 +76,6 @@ protected:
 	int _attackPoint;
 
 public:
-	//void ReceiveMessage(std::wstring message, const sComponentMsgParam& msgParam);
 	void ReceiveMessage(const sComponentMsgParam& msgParam);
 	
 };

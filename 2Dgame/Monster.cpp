@@ -1,5 +1,6 @@
 #include "ComponentSystem.h"
 #include "Map.h"
+#include "MoveState.h"
 #include "Monster.h"
 
 Monster::Monster(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFileName) : Character(name, scriptName, textureFileName)
@@ -20,56 +21,8 @@ void Monster::UpdateAI(float deltaTime)
 		return;
 
 	
-	if (false == _isMoving)
+	if (false == _state->isMoving())
 	{
-		/*
-		Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
-		
-		int fileOffset = 6;
-		int minTileX = _tileX - fileOffset;
-		int maxTileX = _tileX + fileOffset;
-		int minTileY = _tileY - fileOffset;
-		int maxTileY = _tileY + fileOffset;
-
-		if (minTileX < 0)
-			minTileX = 0;
-		if (map->GetWidth() <= maxTileX)
-			maxTileX = map->GetWidth()-1;
-		if (minTileY < 0)
-			minTileX = 0;
-		if (map->GetHeight() <= maxTileY)
-			maxTileY = map->GetHeight()-1;
-
-		Component* findEnemy = NULL;
-
-		//탐색거리에 적이 있는 지 확인
-		for (int y = minTileY; y <= maxTileY; y++)
-		{
-			
-			for (int x = minTileX; x <= maxTileX; x++)
-			{
-				std::list<Component*> componentList;
-				if (false == map->GetTileCollisionList(x, y, componentList))
-				{
-					for (std::list<Component*>::iterator it = componentList.begin(); it != componentList.end(); it++)
-					{
-						Component* component = (*it);
-						if ((component->GetType() == eComponentType::CT_NPC) ||
-							(component->GetType() == eComponentType::CT_PLAYER))
-						{
-							findEnemy = component;
-							break;
-						}
-					}
-				}
-				if (NULL != findEnemy)
-					break;
-			}
-			if (NULL != findEnemy)
-				break;
-		}
-		*/
-
 		std::vector<eComponentType> compareTypeList;
 		compareTypeList.push_back(eComponentType::CT_NPC);
 		compareTypeList.push_back(eComponentType::CT_PLAYER);
@@ -95,7 +48,14 @@ void Monster::UpdateAI(float deltaTime)
 			{
 				direction = eDirection::DOWN;
 			}
-			MoveStart(direction);
+			//MoveStart(direction);
+
+			if (eDirection::NONE != direction)
+			{
+				_currentDirection = direction;
+				//MoveStart();
+				_state->Start();
+			}
 		}
 		else
 		{
@@ -116,7 +76,6 @@ void Monster::Collision(std::list<Component*>& collisionList)
 			msgParam.message = L"Attack";
 			msgParam.receiver = (*it);
 			msgParam.attackPoint = _attackPoint;
-			//ComponentSystem::GetInstance()->SendMsg(L"Attack", (*it), msgParam);
 			ComponentSystem::GetInstance()->SendMsg(msgParam);
 		}
 	}

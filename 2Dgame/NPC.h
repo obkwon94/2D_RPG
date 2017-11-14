@@ -9,7 +9,4 @@ public:
 	~NPC();
 
 	void UpdateAI(float deltaTime);
-
-	//void ReceiveMessage(std::wstring message, const sComponentMsgParam& msgParam);
-
 };

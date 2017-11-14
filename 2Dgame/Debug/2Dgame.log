@@ -1,5 +1,16 @@
-﻿  GameSystem.cpp
-c:\kob\2dgame\2dgame\gamesystem.cpp(311): warning C4996: 'swprintf': function has been changed to conform with the ISO C standard, adding an extra character count parameter. To use the traditional Microsoft version, set _CRT_NON_CONFORMING_SWPRINTFS.
-  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\corecrt_wstdio.h(1822): note: 'swprintf' 선언을 참조하십시오.
+﻿  MoveState.cpp
+  Character.cpp
+c:\kob\2dgame\2dgame\character.cpp(69): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\kob\2dgame\2dgame\character.cpp(70): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\kob\2dgame\2dgame\character.cpp(78): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\kob\2dgame\2dgame\character.cpp(102): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\kob\2dgame\2dgame\character.cpp(110): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\kob\2dgame\2dgame\character.cpp(201): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\kob\2dgame\2dgame\character.cpp(202): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\kob\2dgame\2dgame\character.cpp(214): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\kob\2dgame\2dgame\character.cpp(215): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\kob\2dgame\2dgame\character.cpp(240): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\kob\2dgame\2dgame\character.cpp(241): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
   2Dgame.vcxproj -> C:\KOB\2Dgame\Debug\2Dgame.exe
   2Dgame.vcxproj -> C:\KOB\2Dgame\Debug\2Dgame.pdb (Partial PDB)
