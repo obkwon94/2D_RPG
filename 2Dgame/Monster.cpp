@@ -17,11 +17,13 @@ Monster::~Monster()
 
 void Monster::UpdateAI(float deltaTime)
 {
+	/*
 	if (false == _isLive)
 		return;
 
 	
 	if (false == _state->isMoving())
+	*/
 	{
 		std::vector<eComponentType> compareTypeList;
 		compareTypeList.push_back(eComponentType::CT_NPC);
@@ -71,12 +73,18 @@ void Monster::Collision(std::list<Component*>& collisionList)
 		Component* com = (*it);
 		if ((com->GetType() == eComponentType::CT_NPC) || (com->GetType() == eComponentType::CT_PLAYER))
 		{
+			/*
 			sComponentMsgParam msgParam;
 			msgParam.sender = this;
 			msgParam.message = L"Attack";
 			msgParam.receiver = (*it);
 			msgParam.attackPoint = _attackPoint;
 			ComponentSystem::GetInstance()->SendMsg(msgParam);
+			*/
+			_target = (*it);
+			ChangeState(eStateType::ET_ATTACK);
+			return;
 		}
 	}
+	ChangeState(eStateType::ET_IDLE);
 }

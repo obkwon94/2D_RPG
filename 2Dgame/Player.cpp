@@ -17,10 +17,12 @@ Player::~Player()
 
 void Player::UpdateAI(float deltaTime)
 {
+	/*
 	if (false == _isLive)
 		return;
 
 	if (false == _state->isMoving())
+	*/
 	{
 		eDirection direction = eDirection::NONE;
 		if (GameSystem::GetInstance()->IsKeyDown(VK_UP))
@@ -51,7 +53,8 @@ void Player::UpdateAI(float deltaTime)
 		{
 			_currentDirection = direction;
 			//MoveStart();
-			_state->Start();
+			//_state->Start();
+			ChangeState(eStateType::ET_MOVE);
 		}
 	}
 }
