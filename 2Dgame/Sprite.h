@@ -20,8 +20,10 @@ private:
 	int _x;
 	int _y;
 
+	float _rotate;
+
 public:
-	Sprite(LPCWSTR textureFileName, LPCWSTR scriptFileName);
+	Sprite(LPCWSTR textureFileName, LPCWSTR scriptFileName, float rotate = 0.0f);
 	~Sprite();
 
 	void Init();

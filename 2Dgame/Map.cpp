@@ -49,7 +49,7 @@ void Map::Init()
 	
 	// Load Map Script (1st floor)
 	{
-		char record[1024];
+		char record[1024*4];
 		int line = 0;
 		std::ifstream infile("MapData_1.csv");
 		
@@ -100,7 +100,7 @@ void Map::Init()
 
 	// Load Map Script (2nd floor)
 	{
-		char record[1024];
+		char record[1024*4];
 		int row = 0;
 		int line = 0;
 		std::ifstream infile("MapData_2.csv");

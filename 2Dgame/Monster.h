@@ -13,5 +13,5 @@ public:
 	//move
 public:
 	void UpdateAI(float deltaTime);
-	void Collision(std::list<Component*>& collisionList);
+	Component* Collision(std::list<Component*>& collisionList);
 };

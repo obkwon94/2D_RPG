@@ -96,6 +96,12 @@
     <ClCompile Include="AttackState.cpp">
       <Filter>소스 파일\Game\Character\state</Filter>
     </ClCompile>
+    <ClCompile Include="DefenceState.cpp">
+      <Filter>소스 파일\Game\Character\state</Filter>
+    </ClCompile>
+    <ClCompile Include="DeadState.cpp">
+      <Filter>소스 파일\Game\Character\state</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sprite.h">
@@ -156,6 +162,12 @@
       <Filter>소스 파일\Game\Character\state</Filter>
     </ClInclude>
     <ClInclude Include="AttackState.h">
+      <Filter>소스 파일\Game\Character\state</Filter>
+    </ClInclude>
+    <ClInclude Include="DefenceState.h">
+      <Filter>소스 파일\Game\Character\state</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadState.h">
       <Filter>소스 파일\Game\Character\state</Filter>
     </ClInclude>
   </ItemGroup>

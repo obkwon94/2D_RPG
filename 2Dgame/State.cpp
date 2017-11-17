@@ -20,6 +20,8 @@ void State::Init(Character* character)
 {
 	_character = character;
 
+	CreateSprite();
+	/*
 	_spriteList.clear();
 
 	WCHAR textrureFilename[256];
@@ -50,6 +52,7 @@ void State::Init(Character* character)
 		sprite->Init();
 		_spriteList.push_back(sprite);
 	}
+	*/
 }
 
 void State::Update(float deltaTime)
@@ -85,4 +88,38 @@ void State::Start()
 
 void State::Stop()
 {
+}
+
+void State::CreateSprite()
+{
+	_spriteList.clear();
+
+	WCHAR textrureFilename[256];
+	wsprintf(textrureFilename, L"%s.png", _character->GetTextureFilename().c_str());
+
+	WCHAR scriptFilename[256];
+	{
+		wsprintf(scriptFilename, L"%s_left.json", _character->GetScriptFilename().c_str());
+		Sprite* sprite = new Sprite(textrureFilename, scriptFilename);
+		sprite->Init();
+		_spriteList.push_back(sprite);
+	}
+	{
+		wsprintf(scriptFilename, L"%s_right.json", _character->GetScriptFilename().c_str());
+		Sprite* sprite = new Sprite(textrureFilename, scriptFilename);
+		sprite->Init();
+		_spriteList.push_back(sprite);
+	}
+	{
+		wsprintf(scriptFilename, L"%s_up.json", _character->GetScriptFilename().c_str());
+		Sprite* sprite = new Sprite(textrureFilename, scriptFilename);
+		sprite->Init();
+		_spriteList.push_back(sprite);
+	}
+	{
+		wsprintf(scriptFilename, L"%s_down.json", _character->GetScriptFilename().c_str());
+		Sprite* sprite = new Sprite(textrureFilename, scriptFilename);
+		sprite->Init();
+		_spriteList.push_back(sprite);
+	}
 }

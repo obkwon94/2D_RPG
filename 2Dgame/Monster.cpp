@@ -66,7 +66,7 @@ void Monster::UpdateAI(float deltaTime)
 	}
 }
 
-void Monster::Collision(std::list<Component*>& collisionList)
+Component* Monster::Collision(std::list<Component*>& collisionList)
 {
 	for (std::list<Component*>::iterator it = collisionList.begin(); it != collisionList.end(); it++)
 	{
@@ -81,10 +81,14 @@ void Monster::Collision(std::list<Component*>& collisionList)
 			msgParam.attackPoint = _attackPoint;
 			ComponentSystem::GetInstance()->SendMsg(msgParam);
 			*/
+			/*
 			_target = (*it);
 			ChangeState(eStateType::ET_ATTACK);
 			return;
+			*/
+			return (*it);
 		}
 	}
-	ChangeState(eStateType::ET_IDLE);
+	//ChangeState(eStateType::ET_IDLE);
+	return NULL;
 }

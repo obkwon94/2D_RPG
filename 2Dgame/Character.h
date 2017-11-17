@@ -14,7 +14,10 @@ enum eStateType
 {
 	ET_IDLE,
 	ET_MOVE,
-	ET_ATTACK
+	ET_ATTACK,
+	ET_DEFENCE,
+	ET_DEAD,
+	ET_NONE
 };
 
 enum eDirection
@@ -90,11 +93,15 @@ public:
 	float GetMoveTime() { return _moveTime; }
 
 	eDirection GetDirection() { return _currentDirection; }
-	virtual void Collision(std::list<Component*>& collisionList);
+	virtual Component* Collision(std::list<Component*>& collisionList);
 
 	//Message
 public:
 	void ReceiveMessage(const sComponentMsgParam& msgParam);
+
+	//Common
+public:
+	void DecreaseHP(int decreaseHP);
 	
 	//State
 private:
@@ -117,4 +124,12 @@ public:
 	int GetAttackPoint() { return _attackPoint; }
 	Component* GetTarget() { return _target; }
 	void ResetTarget() { _target = NULL; }
+	void SetTarget(Component* target) { _target = target; }
+
+	//Defence
+protected:
+	int _attackedPoint;
+
+public:
+	int GetAttackedPoint() { return _attackedPoint; }
 };

@@ -5,6 +5,8 @@
 #include "MoveState.h"
 #include "IdleState.h"
 #include "AttackState.h"
+#include "DefenceState.h"
+#include "DeadState.h"
 #include "Character.h"
 
 
@@ -95,14 +97,24 @@ void Character::Init()
 		_stateMap[eStateType::ET_IDLE] = state;
 	}
 	{
-		State* state = new IdleState();
+		State* state = new MoveState();
 		state->Init(this);
 		_stateMap[eStateType::ET_MOVE] = state;
 	}
 	{
-		State* state = new IdleState();
+		State* state = new AttackState();
 		state->Init(this);
 		_stateMap[eStateType::ET_ATTACK] = state;
+	}
+	{
+		State* state = new DefenceState();
+		state->Init(this);
+		_stateMap[eStateType::ET_DEFENCE] = state;
+	}
+	{
+		State* state = new DeadState();
+		state->Init(this);
+		_stateMap[eStateType::ET_DEAD] = state;
 	}
 	ChangeState(eStateType::ET_IDLE);
 }
@@ -167,6 +179,15 @@ void Character::Reset()
 		_spriteList[(int)_currentDirection]->Reset();
 	}
 	*/
+}
+
+void Character::DecreaseHP(int decreaseHP)
+{
+	_hp -= decreaseHP;
+	if (_hp < 0)
+	{
+		_isLive = false;
+	}
 }
 
 void Character::SetPosition(float posX, float posY)
@@ -279,6 +300,7 @@ void Character::MoveStart(int newTileX, int newTileY)
 		_moveDistancePerTimeY = distanceY / _moveTime;
 	}
 	//_state->SetMoving(true);
+	_isMoving = true;
 }
 /*
 void Character::UpadateMove(float deltaTime)
@@ -311,7 +333,7 @@ void Character::MoveStop()
 {
 	_isMoving = false;
 
-	Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"Map");
+	Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
 	_x = map->GetPositionX(_tileX, _tileY);
 	_y = map->GetPositionY(_tileX, _tileY);;
 
@@ -327,7 +349,7 @@ void Character::Moving(float deltaTime)
 	_y += moveDistanceY;
 }
 
-void Character::Collision(std::list<Component*>& collisionList)
+Component* Character::Collision(std::list<Component*>& collisionList)
 {
 	for (std::list<Component*>::iterator it = collisionList.begin(); it != collisionList.end(); it++)
 	{
@@ -337,6 +359,7 @@ void Character::Collision(std::list<Component*>& collisionList)
 		msgParam.receiver = (*it);
 		ComponentSystem::GetInstance()->SendMsg(msgParam);
 	}
+	return NULL;
 }
 
 void Character::ReceiveMessage(const sComponentMsgParam& msgParam)
@@ -346,6 +369,9 @@ void Character::ReceiveMessage(const sComponentMsgParam& msgParam)
 
 	if (L"Attack" == msgParam.message)
 	{
+		_attackedPoint = msgParam.attackPoint;
+		ChangeState(eStateType::ET_DEFENCE);
+		/*
 		int attackPoint = msgParam.attackPoint;
 		_hp -= attackPoint;
 		if (_hp <= 0)
@@ -357,5 +383,6 @@ void Character::ReceiveMessage(const sComponentMsgParam& msgParam)
 			_moveDistancePerTimeX = 0.0f;
 			_moveDistancePerTimeY = 0.0f;
 		}
+		*/
 	}
 }
