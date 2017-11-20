@@ -19,6 +19,13 @@ void IdleState::Init(Character* character)
 void IdleState::Update(float deltaTime)
 {
 	State::Update(deltaTime);
+
+	if (eStateType::ET_NONE != _nextState)
+	{
+		_character->ChangeState(_nextState);
+		return;
+	}
+
 	if (false == _character->IsLive())
 		return;
 

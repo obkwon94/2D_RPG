@@ -120,16 +120,23 @@ protected:
 	int _attackPoint;
 	Component* _target;
 
+	float _attackCooltimeDuration;
+	float _attackSpeed;
+
 public:
 	int GetAttackPoint() { return _attackPoint; }
 	Component* GetTarget() { return _target; }
 	void ResetTarget() { _target = NULL; }
 	void SetTarget(Component* target) { _target = target; }
 
+	void UpdateAttackCooltime(float deltaTime);
+	void ResetAttackCooltime();
+	bool IsAttackCooltime();
+	
 	//Defence
 protected:
-	int _attackedPoint;
+	int _damage;
 
 public:
-	int GetAttackedPoint() { return _attackedPoint; }
+	int GetDamage() { return _damage; }
 };

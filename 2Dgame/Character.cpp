@@ -20,8 +20,12 @@ Character::Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFileName) 
 	_scriptFilename = scriptName;
 	_textureFilename = textureFileName;
 
-	_hp = 10;
+	_hp = 9;
 	_attackPoint = 3;
+	_damage = 0;
+
+	_attackSpeed = 0.2f;
+	_attackCooltimeDuration = 0.0f;
 }
 
 Character::~Character()
@@ -141,6 +145,7 @@ void Character::DeInit()
 
 void Character::Update(float deltaTime)
 {
+	UpdateAttackCooltime(deltaTime);
 	_state->Update(deltaTime);
 	//_spriteList[(int)_currentDirection]->Update(deltaTime);
 	/*
@@ -215,58 +220,23 @@ void Character::UpdateAI(float deltaTime)
 	}
 	*/
 	_currentDirection = (eDirection)(rand() % 4);
-	ChangeState(eStateType::ET_MOVE);
+	//ChangeState(eStateType::ET_MOVE);
+	_state->NextState(eStateType::ET_MOVE);
 }
 
 void Character::ChangeState(eStateType stateType)
 {
-	/*
-	_state->Stop();
-	delete _state;
-
-	_state = new MoveState();
-	_state->Init(this);
-	_state->Start();
-	*/
-	/*
-	if (NULL != _state)
-	{
-		_state->Stop();
-		delete _state;
-		_state = NULL;
-	}
-	*/
 	if (NULL != _state)
 	{
 		_state->Stop();
 	}
-	/*
-	switch (stateType)
-	{
-	case eStateType::ET_IDLE:
-		_state = new IdleState();
-		break;
-	case eStateType::ET_MOVE:
-		_state = new MoveState();
-		break;
-	}
-	*/
+	
 	_state = _stateMap[stateType];
-	//_state->Init(this);
 	_state->Start();
 }
 
 void Character::InitMove()
 {
-	/*
-	_state->Init(this);
-
-	_currentDirection = eDirection::DOWN;
-	_targetX = 0.0f;
-	_targetY = 0.0f;
-	_moveDistancePerTimeX = 0.0f;
-	_moveDistancePerTimeY = 0.0f;
-	*/
 	_isMoving = false;
 	_currentDirection = eDirection::DOWN;
 }
@@ -369,7 +339,7 @@ void Character::ReceiveMessage(const sComponentMsgParam& msgParam)
 
 	if (L"Attack" == msgParam.message)
 	{
-		_attackedPoint = msgParam.attackPoint;
+		_damage = msgParam.attackPoint;
 		ChangeState(eStateType::ET_DEFENCE);
 		/*
 		int attackPoint = msgParam.attackPoint;
@@ -385,4 +355,25 @@ void Character::ReceiveMessage(const sComponentMsgParam& msgParam)
 		}
 		*/
 	}
+}
+
+void Character::UpdateAttackCooltime(float deltaTime)
+{
+	if (_attackCooltimeDuration < _attackSpeed)
+	{
+		_attackCooltimeDuration += deltaTime;
+	}
+}
+
+void Character::ResetAttackCooltime()
+{
+	_attackCooltimeDuration = 0.0f;
+}
+bool Character::IsAttackCooltime()
+{
+	if (_attackSpeed <= _attackCooltimeDuration)
+	{
+		return true;
+	}
+	return false;
 }

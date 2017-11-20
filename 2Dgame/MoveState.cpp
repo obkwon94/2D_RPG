@@ -49,6 +49,7 @@ void MoveState::Update(float deltaTime)
 		_character->Moving(deltaTime);
 	}
 
+
 }
 /*
 void MoveState::UpdateMove(float deltaTime)
@@ -114,13 +115,10 @@ void MoveState::Start()
 	bool canMove = map->GetTileCollisionList(newTileX, newTileY, collisionList);
 	if (false == canMove)
 	{
-		/*
-		_character->Collision(collisionList);
-		_character->ChangeState(eStateType::ET_IDLE);
-		*/
 		Component* target = _character->Collision(collisionList);
-		if (NULL != target)
+		if (NULL != target && _character->IsAttackCooltime())
 		{
+			_character->ResetAttackCooltime();
 			_character->SetTarget(target);
 			_nextState = eStateType::ET_ATTACK;
 		}

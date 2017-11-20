@@ -58,6 +58,8 @@ void State::Init(Character* character)
 void State::Update(float deltaTime)
 {
 	_spriteList[(int)_character->GetDirection()]->Update(deltaTime);
+	
+	
 }
 
 void State::Render()
@@ -84,6 +86,7 @@ void State::Reset()
 
 void State::Start()
 {
+	_nextState = eStateType::ET_NONE;
 }
 
 void State::Stop()
@@ -122,4 +125,9 @@ void State::CreateSprite()
 		sprite->Init();
 		_spriteList.push_back(sprite);
 	}
+}
+
+void State::NextState(eStateType nextState)
+{
+	_nextState = nextState;
 }

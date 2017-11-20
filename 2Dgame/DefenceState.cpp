@@ -46,7 +46,7 @@ void DefenceState::Start()
 {
 	State::Start();
 
-	int attackPoint = _character->GetAttackedPoint();
+	int attackPoint = _character->GetDamage();
 	//_hp -= attackPoint;
 	_character->DecreaseHP(attackPoint);
 	//if (_hp <= 0)
@@ -61,7 +61,8 @@ void DefenceState::Start()
 	}
 	else
 	{
-		_nextState = eStateType::ET_IDLE;
+		//_nextState = eStateType::ET_IDLE;
+		_nextState = eStateType::ET_MOVE;
 	}
 }
 

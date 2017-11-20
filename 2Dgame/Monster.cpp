@@ -7,7 +7,7 @@ Monster::Monster(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFileName) : Ch
 {
 	_type = eComponentType::CT_MONSTER;
 
-	int speed = (rand() % 500) + 100;
+	int speed = (rand() % 100) + 100;
 	_moveTime = (float)speed / 1000.0f;
 }
 Monster::~Monster()
@@ -56,11 +56,13 @@ void Monster::UpdateAI(float deltaTime)
 			{
 				_currentDirection = direction;
 				//MoveStart();
-				_state->Start();
+				//_state->Start();
+				_state->NextState(eStateType::ET_MOVE);
 			}
 		}
 		else
 		{
+			
 			Character::UpdateAI(deltaTime);
 		}
 	}

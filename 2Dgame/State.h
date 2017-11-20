@@ -26,4 +26,6 @@ public:
 	virtual void Stop();
 
 	virtual void CreateSprite();
+
+	void NextState(eStateType nextState);
 };
