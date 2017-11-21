@@ -2,6 +2,7 @@
 #include "ComponentMessage.h"
 #include "Map.h"
 #include "Sprite.h"
+#include "Font.h"
 #include "MoveState.h"
 #include "IdleState.h"
 #include "AttackState.h"
@@ -24,13 +25,14 @@ Character::Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFileName) 
 	_attackPoint = 3;
 	_damage = 0;
 
-	_attackSpeed = 0.2f;
+	_attackSpeed = 0.5f;
 	_attackCooltimeDuration = 0.0f;
 }
 
 Character::~Character()
 {
 	//delete _state;
+	delete _font;
 }
 
 void Character::Init()
@@ -121,6 +123,17 @@ void Character::Init()
 		_stateMap[eStateType::ET_DEAD] = state;
 	}
 	ChangeState(eStateType::ET_IDLE);
+
+
+	//Font
+	{
+		D3DCOLOR color = D3DCOLOR_ARGB(255, 0, 0, 0);
+		_font = new Font(L"Arial", 15, color);
+		
+		_font->SetRect(100, 100, 400, 100);
+		//_font->SetText(L"qwer");
+		UpdateText();
+	}
 }
 
 void Character::DeInit()
@@ -153,15 +166,15 @@ void Character::Update(float deltaTime)
 	//UpadateMove(deltaTime);
 	_state->Update(deltaTime);
 	*/
+	UpdateText();
 }
 
 void Character::Render()
 {
 	_state->Render();
-	/*
-	_spriteList[(int)_currentDirection]->SetPosition(_x, _y);
-	_spriteList[(int)_currentDirection]->Render();
-	*/
+
+	_font->SetPosition(_x-200, _y-50);
+	_font->Render();
 }
 
 void Character::Release()
@@ -189,7 +202,7 @@ void Character::Reset()
 void Character::DecreaseHP(int decreaseHP)
 {
 	_hp -= decreaseHP;
-	if (_hp < 0)
+	if (_hp <= 0)
 	{
 		_isLive = false;
 	}
@@ -269,35 +282,8 @@ void Character::MoveStart(int newTileX, int newTileY)
 		_moveDistancePerTimeX = distanceX / _moveTime;
 		_moveDistancePerTimeY = distanceY / _moveTime;
 	}
-	//_state->SetMoving(true);
 	_isMoving = true;
 }
-/*
-void Character::UpadateMove(float deltaTime)
-{
-	if (_moveTime <= _state->GetMovingDuration())
-	{
-		_state->Stop();
-
-		Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
-		_x = map->GetPositionX(_tileX, _tileY);
-		_y = map->GetPositionY(_tileX, _tileY);
-
-		_moveDistancePerTimeX = 0.0f;
-		_moveDistancePerTimeY = 0.0f;
-	}
-	else
-	{
-		_state->UpdateMove(deltaTime);
-
-		float moveDistanceX = _moveDistancePerTimeX * deltaTime;
-		float moveDistanceY = _moveDistancePerTimeY * deltaTime;
-
-		_x += moveDistanceX;
-		_y += moveDistanceY;
-	}
-}
-*/
 
 void Character::MoveStop()
 {
@@ -321,14 +307,6 @@ void Character::Moving(float deltaTime)
 
 Component* Character::Collision(std::list<Component*>& collisionList)
 {
-	for (std::list<Component*>::iterator it = collisionList.begin(); it != collisionList.end(); it++)
-	{
-		sComponentMsgParam msgParam;
-		msgParam.sender = this;
-		msgParam.message = L"Collision";
-		msgParam.receiver = (*it);
-		ComponentSystem::GetInstance()->SendMsg(msgParam);
-	}
 	return NULL;
 }
 
@@ -340,20 +318,7 @@ void Character::ReceiveMessage(const sComponentMsgParam& msgParam)
 	if (L"Attack" == msgParam.message)
 	{
 		_damage = msgParam.attackPoint;
-		ChangeState(eStateType::ET_DEFENCE);
-		/*
-		int attackPoint = msgParam.attackPoint;
-		_hp -= attackPoint;
-		if (_hp <= 0)
-		{
-			_isLive = false;
-			SetCanMove(true);
-
-			//stop
-			_moveDistancePerTimeX = 0.0f;
-			_moveDistancePerTimeY = 0.0f;
-		}
-		*/
+		_state->NextState(eStateType::ET_DEFENCE);
 	}
 }
 
@@ -363,12 +328,17 @@ void Character::UpdateAttackCooltime(float deltaTime)
 	{
 		_attackCooltimeDuration += deltaTime;
 	}
+	else
+	{
+		_attackCooltimeDuration = _attackSpeed;
+	}
 }
 
 void Character::ResetAttackCooltime()
 {
 	_attackCooltimeDuration = 0.0f;
 }
+
 bool Character::IsAttackCooltime()
 {
 	if (_attackSpeed <= _attackCooltimeDuration)
@@ -376,4 +346,22 @@ bool Character::IsAttackCooltime()
 		return true;
 	}
 	return false;
+}
+
+void Character::UpdateText()
+{
+	if (true == _isLive)
+	{
+		int coolTime = (int)(_attackCooltimeDuration * 1000.0f);
+
+		WCHAR text[256];
+		wsprintf(text, L"HP %d\nATTACK %d", _hp, coolTime);
+		_font->SetText(text);
+	}
+	else
+	{
+		WCHAR text[256];
+		wsprintf(text, L"DEAD");
+		_font->SetText(text);
+	}
 }

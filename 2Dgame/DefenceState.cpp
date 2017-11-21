@@ -46,10 +46,10 @@ void DefenceState::Start()
 {
 	State::Start();
 
-	int attackPoint = _character->GetDamage();
-	//_hp -= attackPoint;
-	_character->DecreaseHP(attackPoint);
-	//if (_hp <= 0)
+	int Damage = _character->GetDamage();
+
+	_character->DecreaseHP(Damage);
+
 	if (false == _character->IsLive())
 	{
 		_character->SetCanMove(true);
@@ -61,7 +61,6 @@ void DefenceState::Start()
 	}
 	else
 	{
-		//_nextState = eStateType::ET_IDLE;
 		_nextState = eStateType::ET_MOVE;
 	}
 }

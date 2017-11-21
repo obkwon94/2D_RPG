@@ -25,6 +25,7 @@
     <ClCompile Include="ComponentSystem.cpp" />
     <ClCompile Include="DeadState.cpp" />
     <ClCompile Include="DefenceState.cpp" />
+    <ClCompile Include="Font.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="GameSystem.cpp" />
     <ClCompile Include="GameTimer.cpp" />
@@ -50,6 +51,7 @@
     <ClInclude Include="ComponentSystem.h" />
     <ClInclude Include="DeadState.h" />
     <ClInclude Include="DefenceState.h" />
+    <ClInclude Include="Font.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="GameSystem.h" />
     <ClInclude Include="GameTimer.h" />

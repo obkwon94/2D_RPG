@@ -6,9 +6,8 @@
 #include "Component.h"
 
 class Sprite;
-//class MoveState;
-//class IdleState;
 class State;
+class Font;
 
 enum eStateType
 {
@@ -32,7 +31,6 @@ enum eDirection
 class Character : public Component
 {
 private:
-	//Sprite* _sprite;
 	std::vector<Sprite*> _spriteList;
 	std::wstring _textureFilename;
 	std::wstring _scriptFilename;
@@ -69,10 +67,6 @@ public:
 
 	//move
 protected:
-	/*
-	
-	float _movingDuration;
-	*/
 	bool _isMoving;
 	float _moveTime;
 	State* _state;
@@ -139,4 +133,11 @@ protected:
 
 public:
 	int GetDamage() { return _damage; }
+
+	//UI
+protected:
+	Font* _font;
+
+public:
+	void UpdateText();
 };

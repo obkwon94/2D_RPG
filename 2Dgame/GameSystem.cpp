@@ -2,6 +2,7 @@
 #include <string>
 
 #include "ComponentSystem.h"
+
 #include "Map.h"
 #include "Monster.h"
 #include "NPC.h"
@@ -270,7 +271,32 @@ bool GameSystem::InitSystem(HINSTANCE hInstance, int nCmdShow)
 		(*it)->Init();
 	}
 
-		map->InitViewer(player);
+	map->InitViewer(player);
+
+	/*
+	//Font
+	{
+	
+		D3DCOLOR color = D3DCOLOR_ARGB(255, 0, 0, 0);
+		_testFont = new Font(L"Arial", 35, color);
+
+		int x = 100;
+		int y = 100;
+
+		int width = 400;
+		int height = 100;
+
+		RECT rect;
+		rect.left = x;
+		rect.right = x + width;
+		rect.top = y;
+		rect.bottom = y + height;
+
+		_testFont->SetRect(rect);
+		_testFont->SetText(L"qwerasdfzxcv");
+	}
+	*/
+		
 
 	return true;
 }
@@ -324,6 +350,9 @@ int GameSystem::Update()
 				{
 					(*it)->Render();
 				}
+
+				
+				//_testFont->Render();
 
 				_sprite->End();
 

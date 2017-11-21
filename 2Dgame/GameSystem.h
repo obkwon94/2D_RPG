@@ -5,12 +5,12 @@
 #include <string>
 #include <vector>
 
-
 #define RELEASE_COM(x){if(x) {x->Release(); x = NULL;}}
 
-class Map;
-class Character;
 class Component;
+class Font;
+class Character;
+class Map;
 
 class GameSystem
 {
@@ -74,4 +74,9 @@ public:
 	void KeyDown(unsigned int keyCode);
 	void KeyUp(unsigned int keyCode);
 	bool IsKeyDown(unsigned int keyCode);
+
+	//Font Test
+private:
+	//ID3DXFont* _dxTestFont;
+	Font* _testFont;
 };

@@ -5,8 +5,6 @@ class Character;
 
 class DefenceState : public State
 {
-private:
-	Character* _character;
 public:
 	DefenceState();
 	~DefenceState();
