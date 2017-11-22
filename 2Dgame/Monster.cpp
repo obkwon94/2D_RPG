@@ -34,29 +34,35 @@ void Monster::UpdateAI(float deltaTime)
 		{
 			//추격 방향 설정
 			eDirection direction = eDirection::NONE;
-			if (findEnemy->GetTileX() <= _tileX)
+
+			
+			//if (rangeY <= rangeX)
 			{
-				direction = eDirection::LEFT;
+				if (findEnemy->GetTileX() <= _tileX)
+				{
+					direction = eDirection::LEFT;
+				}
+				else if (_tileX <= findEnemy->GetTileX())
+				{
+					direction = eDirection::RIGHT;
+				}
 			}
-			else if (_tileX <= findEnemy->GetTileX())
+			//else
 			{
-				direction = eDirection::RIGHT;
+				if (findEnemy->GetTileY() <= _tileY)
+				{
+					direction = eDirection::UP;
+				}
+				else if (_tileY <= findEnemy->GetTileY())
+				{
+					direction = eDirection::DOWN;
+				}
 			}
-			else if (findEnemy->GetTileY() <= _tileY)
-			{
-				direction = eDirection::UP;
-			}
-			else if (_tileY <= findEnemy->GetTileY())
-			{
-				direction = eDirection::DOWN;
-			}
-			//MoveStart(direction);
+			
 
 			if (eDirection::NONE != direction)
 			{
 				_currentDirection = direction;
-				//MoveStart();
-				//_state->Start();
 				_state->NextState(eStateType::ET_MOVE);
 			}
 		}
@@ -75,19 +81,6 @@ Component* Monster::Collision(std::list<Component*>& collisionList)
 		Component* com = (*it);
 		if ((com->GetType() == eComponentType::CT_NPC) || (com->GetType() == eComponentType::CT_PLAYER))
 		{
-			/*
-			sComponentMsgParam msgParam;
-			msgParam.sender = this;
-			msgParam.message = L"Attack";
-			msgParam.receiver = (*it);
-			msgParam.attackPoint = _attackPoint;
-			ComponentSystem::GetInstance()->SendMsg(msgParam);
-			*/
-			/*
-			_target = (*it);
-			ChangeState(eStateType::ET_ATTACK);
-			return;
-			*/
 			return (*it);
 		}
 	}

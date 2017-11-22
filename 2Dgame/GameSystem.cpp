@@ -7,6 +7,7 @@
 #include "Monster.h"
 #include "NPC.h"
 #include "Player.h"
+#include "RecoveryItem.h"
 #include "GameSystem.h"
 #include "GameTimer.h"
 
@@ -239,6 +240,13 @@ bool GameSystem::InitSystem(HINSTANCE hInstance, int nCmdShow)
 	Map* map = new Map(L"MapData");
 	_componentList.push_back(map);
 
+	for (int i = 0; i < 10; i++)
+	{
+		WCHAR name[256];
+		wsprintf(name, L"recover_item_%d", i);
+		RecoveryItem* item = new RecoveryItem(name, L"recovery_item", L"item_sprites");
+		_componentList.push_back(item);
+	}
 
 	Player* player = new Player(L"player", L"player", L"player");
 	_componentList.push_back(player);
@@ -272,31 +280,6 @@ bool GameSystem::InitSystem(HINSTANCE hInstance, int nCmdShow)
 	}
 
 	map->InitViewer(player);
-
-	/*
-	//Font
-	{
-	
-		D3DCOLOR color = D3DCOLOR_ARGB(255, 0, 0, 0);
-		_testFont = new Font(L"Arial", 35, color);
-
-		int x = 100;
-		int y = 100;
-
-		int width = 400;
-		int height = 100;
-
-		RECT rect;
-		rect.left = x;
-		rect.right = x + width;
-		rect.top = y;
-		rect.bottom = y + height;
-
-		_testFont->SetRect(rect);
-		_testFont->SetText(L"qwerasdfzxcv");
-	}
-	*/
-		
 
 	return true;
 }

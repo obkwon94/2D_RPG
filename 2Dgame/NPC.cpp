@@ -17,10 +17,6 @@ NPC::~NPC()
 
 void NPC::UpdateAI(float deltaTime)
 {
-	/*
-	if (false == _state->isMoving())
-	
-	*/
 	{
 		/*나를 기준으로 몇 칸의 타일을 감시할지 결정하여 검사하는 타일 범위를 구한다*/
 		/*범위 내 모든 타일을 검사하여 NPC or Player 가 있으면 적을 추적한다*/
@@ -62,12 +58,7 @@ void NPC::UpdateAI(float deltaTime)
 
 				if (map->CanMoveTileMap(newTileX, newTileY))
 				{
-					/*
-					direction = (eDirection)findDir;
-					MoveStart(direction);
-					*/
 					_currentDirection = (eDirection)findDir;
-					//MoveStart();
 					ChangeState(eStateType::ET_MOVE);
 					break;
 				}

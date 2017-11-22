@@ -17,43 +17,31 @@ Player::~Player()
 
 void Player::UpdateAI(float deltaTime)
 {
-	/*
-	if (false == _isLive)
-		return;
-
-	if (false == _state->isMoving())
-	*/
 	{
 		eDirection direction = eDirection::NONE;
 		if (GameSystem::GetInstance()->IsKeyDown(VK_UP))
 		{
-			//MoveStart(eDirection::UP);
 			direction = eDirection::UP;
 		}
 
 		if (GameSystem::GetInstance()->IsKeyDown(VK_DOWN))
 		{
-			//MoveStart(eDirection::DOWN);
 			direction = eDirection::DOWN;
 		}
 
 		if (GameSystem::GetInstance()->IsKeyDown(VK_LEFT))
 		{
-			//MoveStart(eDirection::LEFT);
 			direction = eDirection::LEFT;
 		}
 
 		if (GameSystem::GetInstance()->IsKeyDown(VK_RIGHT))
 		{
-			//MoveStart(eDirection::RIGHT);
 			direction = eDirection::RIGHT;
 		}
 
 		if (eDirection::NONE != direction)
 		{
 			_currentDirection = direction;
-			//MoveStart();
-			//_state->Start();
 			ChangeState(eStateType::ET_MOVE);
 		}
 	}
@@ -66,22 +54,8 @@ Component* Player::Collision(std::list<Component*>& collisionList)
 		Component* com = (*it);
 		if ((com->GetType() == eComponentType::CT_MONSTER))
 		{
-			/*
-			sComponentMsgParam msgParam;
-			msgParam.sender = this;
-			msgParam.message = L"Attack";
-			msgParam.receiver = (*it);
-			msgParam.attackPoint = _attackPoint;
-			ComponentSystem::GetInstance()->SendMsg(msgParam);
-			*/
-			/*
-			_target = (*it);
-			ChangeState(eStateType::ET_ATTACK);
-			return;
-			*/
 			return (*it);
 		}
 	}
-	//ChangeState(eStateType::ET_IDLE);
 	return NULL;
 }

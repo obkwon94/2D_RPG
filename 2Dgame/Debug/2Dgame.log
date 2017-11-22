@@ -1,12 +1,5 @@
-﻿  Character.cpp
-c:\kob\2dgame\2dgame\character.cpp(93): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\kob\2dgame\2dgame\character.cpp(94): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\kob\2dgame\2dgame\character.cpp(176): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\kob\2dgame\2dgame\character.cpp(262): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\kob\2dgame\2dgame\character.cpp(263): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\kob\2dgame\2dgame\character.cpp(275): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\kob\2dgame\2dgame\character.cpp(276): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\kob\2dgame\2dgame\character.cpp(293): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\kob\2dgame\2dgame\character.cpp(294): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+﻿  RecoveryItem.cpp
+c:\kob\2dgame\2dgame\recoveryitem.cpp(37): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\kob\2dgame\2dgame\recoveryitem.cpp(38): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   2Dgame.vcxproj -> C:\KOB\2Dgame\Debug\2Dgame.exe
   2Dgame.vcxproj -> C:\KOB\2Dgame\Debug\2Dgame.pdb (Partial PDB)

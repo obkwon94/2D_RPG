@@ -14,14 +14,12 @@
 Character::Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFileName) : Component(name)
 {
 	_state = NULL;
-	//_state = new MoveState();
-	//_spriteList.clear();
 	_moveTime = 1.0f;
 
 	_scriptFilename = scriptName;
 	_textureFilename = textureFileName;
 
-	_hp = 9;
+	_hp = 18;
 	_attackPoint = 3;
 	_damage = 0;
 
@@ -31,47 +29,11 @@ Character::Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFileName) 
 
 Character::~Character()
 {
-	//delete _state;
 	delete _font;
 }
 
 void Character::Init()
 {
-	/*
-	WCHAR textureFilename[256];
-	wsprintf(textureFilename, L"%s.png", _textureFilename.c_str());
-
-	WCHAR scriptFilename[256];
-	{
-
-		wsprintf(scriptFilename, L"%s_left.json", _scriptFilename.c_str());
-
-		Sprite* sprite = new Sprite(textureFilename, scriptFilename);
-		sprite->Init();
-		_spriteList.push_back(sprite);
-	}
-	{
-		wsprintf(scriptFilename, L"%s_right.json", _scriptFilename.c_str());
-
-		Sprite* sprite = new Sprite(textureFilename, scriptFilename);
-		sprite->Init();
-		_spriteList.push_back(sprite);
-	}
-	{
-		wsprintf(scriptFilename, L"%s_up.json", _scriptFilename.c_str());
-
-		Sprite* sprite = new Sprite(textureFilename, scriptFilename);
-		sprite->Init();
-		_spriteList.push_back(sprite);
-	}
-	{
-		wsprintf(scriptFilename, L"%s_down.json", _scriptFilename.c_str());
-
-		Sprite* sprite = new Sprite(textureFilename, scriptFilename);
-		sprite->Init();
-		_spriteList.push_back(sprite);
-	}
-	*/
 	//character test
 	{
 		Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
@@ -128,10 +90,9 @@ void Character::Init()
 	//Font
 	{
 		D3DCOLOR color = D3DCOLOR_ARGB(255, 0, 0, 0);
-		_font = new Font(L"Arial", 15, color);
+		_font = new Font(L"Arial", 25, color);
 		
 		_font->SetRect(100, 100, 400, 100);
-		//_font->SetText(L"qwer");
 		UpdateText();
 	}
 }
@@ -146,26 +107,12 @@ void Character::DeInit()
 		it++;
 	}
 	_stateMap.clear();
-	/*
-	for (int i = 0; i < _spriteList.size(); i++)
-	{
-		_spriteList[i]->DeInit();
-		delete _spriteList[i];
-	}
-	_spriteList.clear();
-	*/
 }
 
 void Character::Update(float deltaTime)
 {
 	UpdateAttackCooltime(deltaTime);
 	_state->Update(deltaTime);
-	//_spriteList[(int)_currentDirection]->Update(deltaTime);
-	/*
-	UpdateAI(deltaTime);
-	//UpadateMove(deltaTime);
-	_state->Update(deltaTime);
-	*/
 	UpdateText();
 }
 
@@ -173,35 +120,24 @@ void Character::Render()
 {
 	_state->Render();
 
-	_font->SetPosition(_x-200, _y-50);
+	_font->SetPosition(_x-200, _y-70);
 	_font->Render();
 }
 
 void Character::Release()
 {
 	_state->Release();
-	/*
-	for (int i = 0; i < _spriteList.size(); i++)
-	{
-		_spriteList[(int)_currentDirection]->Release();
-	}
-	*/
 }
 
 void Character::Reset()
 {
 	_state->Reset();
-	/*
-	for (int i = 0; i < _spriteList.size(); i++)
-	{
-		_spriteList[(int)_currentDirection]->Reset();
-	}
-	*/
 }
 
 void Character::DecreaseHP(int decreaseHP)
 {
 	_hp -= decreaseHP;
+	
 	if (_hp <= 0)
 	{
 		_isLive = false;
@@ -222,18 +158,7 @@ void Character::MoveDeltaPosition(float deltaX, float deltaY)
 
 void Character::UpdateAI(float deltaTime)
 {
-	/*
-	if (false == _isLive)
-		return;
-
-	if (false == _state->isMoving())
-	{
-		_currentDirection = (eDirection)(rand() % 4);
-		_state->Start();
-	}
-	*/
 	_currentDirection = (eDirection)(rand() % 4);
-	//ChangeState(eStateType::ET_MOVE);
 	_state->NextState(eStateType::ET_MOVE);
 }
 
@@ -318,6 +243,10 @@ void Character::ReceiveMessage(const sComponentMsgParam& msgParam)
 	if (L"Attack" == msgParam.message)
 	{
 		_damage = msgParam.attackPoint;
+		if (2 < rand() % 4)
+		{
+			_damage = _damage * 2;
+		}
 		_state->NextState(eStateType::ET_DEFENCE);
 	}
 }
@@ -355,13 +284,13 @@ void Character::UpdateText()
 		int coolTime = (int)(_attackCooltimeDuration * 1000.0f);
 
 		WCHAR text[256];
-		wsprintf(text, L"HP %d\nATTACK %d", _hp, coolTime);
+		wsprintf(text, L"DAMAGE %d\nHP %d\nATTACK %d", _damage, _hp, coolTime);
 		_font->SetText(text);
 	}
 	else
 	{
 		WCHAR text[256];
-		wsprintf(text, L"DEAD");
+		wsprintf(text, L"DIED");
 		_font->SetText(text);
 	}
 }

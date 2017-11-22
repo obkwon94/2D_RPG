@@ -18,7 +18,6 @@ Component::~Component()
 
 }
 
-//void Component::ReceiveMessage(std::wstring message, const sComponentMsgParam& msgParam)
 void Component::ReceiveMessage(const sComponentMsgParam& msgParam)
 {
 	if (L"Collision" == msgParam.message)
