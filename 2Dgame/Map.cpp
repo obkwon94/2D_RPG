@@ -267,6 +267,11 @@ void Map::ResetTileComponent(int tileX, int tileY, Component* component)
 	_tileMap[tileY][tileX]->RemoveComponent(component);
 }
 
+std::list<Component*> Map::GetTileComponentList(int tileX, int tileY)
+{
+	return _tileMap[tileY][tileX]->GetComponentList();
+}
+
 bool Map::CanMoveTileMap(int tileX, int tileY)
 {
 	if (tileX < 0)

@@ -19,8 +19,8 @@ Character::Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFileName) 
 	_scriptFilename = scriptName;
 	_textureFilename = textureFileName;
 
-	_hp = 18;
-	_attackPoint = 3;
+	_hp = 100;
+	_attackPoint = 10;
 	_damage = 0;
 
 	_attackSpeed = 0.5f;
@@ -134,6 +134,16 @@ void Character::Reset()
 	_state->Reset();
 }
 
+void Character::IncreaseHP(int increaseHP)
+{
+	_hp += increaseHP;
+	
+	if (100 <= _hp)
+	{
+		_hp = 100;
+	}
+}
+
 void Character::DecreaseHP(int decreaseHP)
 {
 	_hp -= decreaseHP;
@@ -141,6 +151,7 @@ void Character::DecreaseHP(int decreaseHP)
 	if (_hp <= 0)
 	{
 		_isLive = false;
+		_state->NextState(eStateType::ET_DEAD);
 	}
 }
 

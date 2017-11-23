@@ -33,6 +33,7 @@ public:
 
 	void AddComponent(Component* component, bool isRender);
 	void RemoveComponent(Component* component);
+	std::list<Component*> GetComponentList() { return _componentList; }
 
 	bool CanMove();
 	bool GetTileCollisionList(std::list<Component*>& collisionList);

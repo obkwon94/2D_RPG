@@ -62,25 +62,25 @@ void DeadState::CreateSprite()
 
 	WCHAR scriptFilename[256];
 	{
-		wsprintf(scriptFilename, L"%s_Dead_left.json", _character->GetScriptFilename().c_str());
+		wsprintf(scriptFilename, L"%s_Dead_Left.json", _character->GetScriptFilename().c_str());
 		Sprite* sprite = new Sprite(textrureFilename, scriptFilename, 1.5f);
 		sprite->Init();
 		_spriteList.push_back(sprite);
 	}
 	{
-		wsprintf(scriptFilename, L"%s_Dead_right.json", _character->GetScriptFilename().c_str());
+		wsprintf(scriptFilename, L"%s_Dead_Right.json", _character->GetScriptFilename().c_str());
 		Sprite* sprite = new Sprite(textrureFilename, scriptFilename, 1.5f);
 		sprite->Init();
 		_spriteList.push_back(sprite);
 	}
 	{
-		wsprintf(scriptFilename, L"%s_Dead_up.json", _character->GetScriptFilename().c_str());
+		wsprintf(scriptFilename, L"%s_Dead_Down.json", _character->GetScriptFilename().c_str());
 		Sprite* sprite = new Sprite(textrureFilename, scriptFilename, 1.5f);
 		sprite->Init();
 		_spriteList.push_back(sprite);
 	}
 	{
-		wsprintf(scriptFilename, L"%s_Dead_down.json", _character->GetScriptFilename().c_str());
+		wsprintf(scriptFilename, L"%s_Dead_Up.json", _character->GetScriptFilename().c_str());
 		Sprite* sprite = new Sprite(textrureFilename, scriptFilename, 1.5f);
 		sprite->Init();
 		_spriteList.push_back(sprite);

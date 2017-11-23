@@ -39,11 +39,39 @@ void Player::UpdateAI(float deltaTime)
 			direction = eDirection::RIGHT;
 		}
 
+		//space를 누르면 아이템 먹기
+		if (GameSystem::GetInstance()->IsKeyDown(VK_SPACE))
+		{
+			Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
+			std::list<Component*> componentList = map->GetTileComponentList(_tileX, _tileY);
+			for (std::list<Component*>::iterator it = componentList.begin(); it != componentList.end(); it++)
+			{
+				Component* component = (*it);
+				if (eComponentType::CT_ITEM == component->GetType())
+				{
+					/*
+					_hp = 100;
+					map->ResetTileComponent(_tileX, _tileY, component);
+					component->SetLive(false);
+					*/
+					
+					sComponentMsgParam msgParam;
+					msgParam.sender = (Component*)this;
+					msgParam.receiver = component;
+					msgParam.message = L"Use";
+					ComponentSystem::GetInstance()->SendMsg(msgParam);
+					
+
+				}
+			}
+		}
+
 		if (eDirection::NONE != direction)
 		{
 			_currentDirection = direction;
 			ChangeState(eStateType::ET_MOVE);
 		}
+	
 	}
 }
 

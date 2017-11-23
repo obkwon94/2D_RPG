@@ -58,8 +58,6 @@ public:
 
 	//Message
 public:
-	//virtual void ReceiveMessage(Component* sender, std::wstring message);
-	//virtual void ReceiveMessage(std::wstring message, const sComponentMsgParam& msgParam);
 	virtual void ReceiveMessage(const sComponentMsgParam& msgParam);
 
 	//Action
@@ -68,5 +66,6 @@ protected:
 
 public:
 	bool IsLive() { return _isLive; }
+	void SetLive(bool isLive) { _isLive = isLive; }
 
 }; 

@@ -1,5 +1,6 @@
 #include "ComponentSystem.h"
 #include "Map.h"
+#include "Character.h"
 #include "Sprite.h"
 #include "TileObject.h"
 #include "RecoveryItem.h"
@@ -7,7 +8,7 @@
 RecoveryItem::RecoveryItem(LPCWSTR name, LPCWSTR scriptFilename, LPCWSTR textureFilename) : Component(name)
 {
 	_sprite = NULL;
-	_ComponentType = eComponentType::CT_ITEM;
+	_type = eComponentType::CT_ITEM;
 	_scriptFilename = scriptFilename;
 	_textureFilename = textureFilename;
 }
@@ -63,6 +64,9 @@ void RecoveryItem::Update(float deltaTime)
 
 void RecoveryItem::Render()
 {
+	if (false == _isLive)
+		return;
+
 	_sprite->SetPosition(_x, _y);
 	_sprite->Render();
 }
@@ -87,4 +91,27 @@ void RecoveryItem::MoveDeltaPosition(float deltaX, float deltaY)
 {
 	_x += deltaX;
 	_y += deltaY;
+}
+
+void RecoveryItem::ReceiveMessage(const sComponentMsgParam& msgParam)
+{
+	if (L"Use" == msgParam.message)
+	{
+		Component* sender = msgParam.sender;
+		switch (sender->GetType())
+		{
+		case eComponentType::CT_PLAYER:
+			((Character*)sender)->IncreaseHP(100);
+			_isLive = false;
+			break;
+
+		case eComponentType::CT_NPC:
+			break;
+
+		case eComponentType::CT_MONSTER:
+			break;
+
+		}
+	}
+	
 }

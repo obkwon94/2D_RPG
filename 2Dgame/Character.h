@@ -95,6 +95,7 @@ public:
 
 	//Common
 public:
+	void IncreaseHP(int increaseHP);
 	void DecreaseHP(int decreaseHP);
 	
 	//State

@@ -8,7 +8,6 @@ class RecoveryItem : public Component
 {
 private:
 	Sprite* _sprite;
-	eComponentType _ComponentType;
 	float _x;
 	float _y;
 
@@ -28,4 +27,7 @@ public:
 
 	void SetPosition(float posX, float posY);
 	void MoveDeltaPosition(float deltaX, float deltaY);
+
+	//message
+	void ReceiveMessage(const sComponentMsgParam& msgParam);
 };

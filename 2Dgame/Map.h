@@ -45,9 +45,11 @@ public:
 
 	void SetTileComponent(int tileX, int tileY, Component* component, bool isRender);
 	void ResetTileComponent(int tileX, int tileY, Component* component);
+	std::list<Component*> GetTileComponentList(int tileX, int tileY);
 
 	bool CanMoveTileMap(int tileX, int tileY);
 	bool GetTileCollisionList(int tileX, int tileY, std::list<Component*>& collisionList);
+	
 
 	void InitViewer(Component* viewer);
 };
