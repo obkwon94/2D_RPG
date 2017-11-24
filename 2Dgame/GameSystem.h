@@ -12,6 +12,8 @@ class Font;
 class Character;
 class Map;
 
+class Stage;
+
 class GameSystem
 {
 	//Singleton
@@ -54,10 +56,12 @@ public:
 	bool InitDirect3D();
 	void ChackDeviceLost();
 
-	//Texture
+	//Component
 private:
-	std::list<Component*> _componentList;
+	Stage* _stage;
 
+public:
+	Stage* GetStage() { return _stage; }
 	//Input
 public:
 	enum eKeyState

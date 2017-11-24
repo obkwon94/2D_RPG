@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include "GameSystem.h"
 #include "Component.h"
 #include "ComponentSystem.h"
+#include "Stage.h"
 #include "map.h"
 
 ComponentSystem* ComponentSystem::_instance = NULL;
@@ -56,9 +58,10 @@ Component* ComponentSystem::FindComponent(std::wstring name)
 	return 0;
 }
 
-Component* ComponentSystem::FindComponentInRange(Component* chaser, int range, std::vector<eComponentType> compareTypeList)
+Component* ComponentSystem::FindComponentInRange(Component* mapComp, Component* chaser, int range, std::vector<eComponentType> compareTypeList)
 {
-	Map* map = (Map*)FindComponent(L"MapData");
+	//Map* map = (Map*)FindComponent(L"MapData");
+	Map* map = (Map*)mapComp;
 
 	int minTileX = chaser->GetTileX() - range;
 	int maxTileX = chaser->GetTileX() + range;
@@ -121,5 +124,13 @@ void ComponentSystem::ProcessMsgQueue()
 		sComponentMsgParam msgParam = _msgQueue.front();
 		_msgQueue.pop();
 		msgParam.receiver->ReceiveMessage(msgParam);
+	}
+}
+
+void ComponentSystem::ClearMessageQueue()
+{
+	while (0 < _msgQueue.size())
+	{
+		_msgQueue.pop();
 	}
 }

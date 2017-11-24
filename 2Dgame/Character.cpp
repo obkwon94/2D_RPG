@@ -1,5 +1,7 @@
+#include "GameSystem.h"
 #include "ComponentSystem.h"
 #include "ComponentMessage.h"
+#include "Stage.h"
 #include "Map.h"
 #include "Sprite.h"
 #include "Font.h"
@@ -36,7 +38,8 @@ void Character::Init()
 {
 	//character test
 	{
-		Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
+		//Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
+		Map* map = GameSystem::GetInstance()->GetStage()->GetMap();
 
 		int tileX = rand() % (map->GetWidth() - 1) + 1;
 		int tileY = rand() % (map->GetHeight() - 1) + 1;
@@ -192,7 +195,8 @@ void Character::InitMove()
 
 void Character::MoveStart(int newTileX, int newTileY)
 {
-	Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
+	//Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
+	Map* map = GameSystem::GetInstance()->GetStage()->GetMap();
 	map->ResetTileComponent(_tileX, _tileY, this);
 
 	_x = map->GetPositionX(_tileX, _tileY);
@@ -225,7 +229,8 @@ void Character::MoveStop()
 {
 	_isMoving = false;
 
-	Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
+	//Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
+	Map* map = GameSystem::GetInstance()->GetStage()->GetMap();
 	_x = map->GetPositionX(_tileX, _tileY);
 	_y = map->GetPositionY(_tileX, _tileY);;
 

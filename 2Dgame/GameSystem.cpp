@@ -3,11 +3,14 @@
 
 #include "ComponentSystem.h"
 
+#include "Stage.h"
+/*
 #include "Map.h"
 #include "Monster.h"
 #include "NPC.h"
 #include "Player.h"
 #include "RecoveryItem.h"
+*/
 #include "GameSystem.h"
 #include "GameTimer.h"
 
@@ -21,6 +24,7 @@ GameSystem::GameSystem()
 
 GameSystem::~GameSystem()
 {
+	delete _stage;
 	RELEASE_COM(_device3d);
 	RELEASE_COM(_sprite);
 }
@@ -235,51 +239,8 @@ bool GameSystem::InitSystem(HINSTANCE hInstance, int nCmdShow)
 	if (false == InitDirect3D())
 		return false;
 
-	_componentList.clear();
-
-	Map* map = new Map(L"MapData");
-	_componentList.push_back(map);
-
-	for (int i = 0; i < 10; i++)
-	{
-		WCHAR name[256];
-		wsprintf(name, L"recover_item_%d", i);
-		RecoveryItem* item = new RecoveryItem(name, L"recovery_item", L"item_sprites");
-		_componentList.push_back(item);
-	}
-
-	Player* player = new Player(L"player", L"player", L"player");
-	_componentList.push_back(player);
-	
-	for (int i = 0; i < 20; i++)
-	{
-		WCHAR name[256];
-		wsprintf(name, L"npc_%d", i);
-		NPC* npc = new NPC(name, L"npc", L"character_sprite2");
-		_componentList.push_back(npc);
-	}
-	
-	/*
-	NPC* npc = new NPC(L"npc", L"npc", L"character_sprite2");
-	_componentList.push_back(npc);
-	*/
-	for (int i = 0; i < 10; i++)
-	{
-		WCHAR name[256];
-		wsprintf(name, L"monster_%d", i);
-		Monster* monster = new Monster(name, L"monster", L"monster");
-		_componentList.push_back(monster);
-	}
-
-	//Monster* monster = new Monster(L"monster", L"monster", L"monster");
-	//_componentList.push_back(monster);
-		
-	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
-	{
-		(*it)->Init();
-	}
-
-	map->InitViewer(player);
+	_stage = new Stage();
+	_stage->Init(L"MapData01");
 
 	return true;
 }
@@ -307,12 +268,9 @@ int GameSystem::Update()
 			_frameDuration += deltaTime;
 
 			ComponentSystem::GetInstance()->UpdateMsg(deltaTime);
-			
-			for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
-			{
-				(*it)->Update(deltaTime);
-			}
 
+			_stage->Update(deltaTime);
+		
 			float secondPerFrame = 1.0f / 60.0f;
 			if (secondPerFrame <= _frameDuration)
 			{
@@ -329,14 +287,8 @@ int GameSystem::Update()
 
 				_sprite->Begin(D3DXSPRITE_ALPHABLEND);
 				
-				for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
-				{
-					(*it)->Render();
-				}
-
+				_stage->Render();
 				
-				//_testFont->Render();
-
 				_sprite->End();
 
 				_device3d->EndScene();
@@ -346,6 +298,16 @@ int GameSystem::Update()
 				_device3d->Present(NULL, NULL, NULL, NULL);
 				
 			}	
+			//stage 교체 테스트
+			{
+				if (IsKeyDown(VK_F1))
+				{
+					ComponentSystem::GetInstance()->ClearMessageQueue();
+					delete _stage;
+					_stage = new Stage();
+					_stage->Init(L"MapData02");
+				}
+			}
 		}
 	}
 	return (int)msg.wParam;
@@ -370,20 +332,13 @@ void GameSystem::ChackDeviceLost()
 		}
 		else if (D3DERR_DEVICENOTRESET == hr)
 		{
-			//복구
-			for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
-			{
-				(*it)->Release();
-			}
-
+			_stage->Release();
+		
 			InitDirect3D();
 
 			hr = _device3d->Reset(&_d3dpp);
 		
-			for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
-			{
-				(*it)->Reset();
-			}
+			_stage->Reset();
 		}
 	}
 }

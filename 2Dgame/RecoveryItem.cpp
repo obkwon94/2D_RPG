@@ -1,4 +1,6 @@
+#include "GameSystem.h"
 #include "ComponentSystem.h"
+#include "Stage.h"
 #include "Map.h"
 #include "Character.h"
 #include "Sprite.h"
@@ -20,7 +22,8 @@ RecoveryItem::~RecoveryItem()
 
 void RecoveryItem::Init()
 {
-	Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
+	//Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
+	Map* map = GameSystem::GetInstance()->GetStage()->GetMap();
 
 	int tileX = rand() % (map->GetWidth() - 1) + 1;
 	int tileY = rand() % (map->GetHeight() - 1) + 1;

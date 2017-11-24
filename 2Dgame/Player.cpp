@@ -1,5 +1,6 @@
 #include "ComponentSystem.h"
 #include "GameSystem.h"
+#include "Stage.h"
 #include "Map.h"
 #include "MoveState.h"
 #include "Player.h"
@@ -42,7 +43,9 @@ void Player::UpdateAI(float deltaTime)
 		//space를 누르면 아이템 먹기
 		if (GameSystem::GetInstance()->IsKeyDown(VK_SPACE))
 		{
-			Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
+			//Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
+			Map* map = GameSystem::GetInstance()->GetStage()->GetMap();
+
 			std::list<Component*> componentList = map->GetTileComponentList(_tileX, _tileY);
 			for (std::list<Component*>::iterator it = componentList.begin(); it != componentList.end(); it++)
 			{

@@ -37,7 +37,7 @@ public:
 	void RemoveAllComponents();
 	Component* FindComponent(std::wstring name);
 
-	Component* FindComponentInRange(Component* chaser, int range, std::vector<eComponentType> compareTypeList);
+	Component* FindComponentInRange(Component* mapComp, Component* chaser, int range, std::vector<eComponentType> compareTypeList);
 
 	//Message
 private:
@@ -47,4 +47,5 @@ public:
 	void SendMsg(const sComponentMsgParam& msgParam);
 	void ProcessMsgQueue();
 	void UpdateMsg(float deltaTime);
+	void ClearMessageQueue();
 };

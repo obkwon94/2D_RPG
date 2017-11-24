@@ -1,4 +1,6 @@
+#include "GameSystem.h"
 #include "ComponentSystem.h"
+#include "Stage.h"
 #include "Map.h"
 #include "Character.h"
 #include "MoveState.h"
@@ -79,7 +81,8 @@ void MoveState::Start()
 	if (true == _character->IsMoving())
 		return;
 
-	Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
+	//Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
+	Map* map = GameSystem::GetInstance()->GetStage()->GetMap();
 	
 	int newTileX = _character->GetTileX();
 	int newTileY = _character->GetTileY();

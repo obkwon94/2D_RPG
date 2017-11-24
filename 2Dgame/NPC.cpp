@@ -1,4 +1,6 @@
+#include "GameSystem.h"
 #include "ComponentSystem.h"
+#include "Stage.h"
 #include "Map.h"
 #include "MoveState.h"
 #include "NPC.h"
@@ -21,14 +23,15 @@ void NPC::UpdateAI(float deltaTime)
 		/*나를 기준으로 몇 칸의 타일을 감시할지 결정하여 검사하는 타일 범위를 구한다*/
 		/*범위 내 모든 타일을 검사하여 NPC or Player 가 있으면 적을 추적한다*/
 		/*못찾았으면 평소 움직인다*/
-		
+		Map* map = GameSystem::GetInstance()->GetStage()->GetMap();
+
 		std::vector<eComponentType> compareTypeList;
 		compareTypeList.push_back(eComponentType::CT_MONSTER);
-		Component* findEnemy = ComponentSystem::GetInstance()->FindComponentInRange(this, 3, compareTypeList);
+		Component* findEnemy = ComponentSystem::GetInstance()->FindComponentInRange(map, this, 3, compareTypeList);
 
 		if (NULL != findEnemy)
 		{
-			Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
+			
 
 			//도주 경로 탐색
 			eDirection direction = eDirection::NONE;
