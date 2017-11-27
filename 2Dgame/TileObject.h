@@ -14,7 +14,7 @@ private:
 
 public:
 	TileObject(LPCWSTR name, Sprite* sprite);
-	~TileObject();
+	virtual ~TileObject();
 
 	void Init() ;
 	void DeInit() ;

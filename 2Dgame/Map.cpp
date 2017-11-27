@@ -2,6 +2,7 @@
 
 #include "GameSystem.h"
 #include "TileObject.h"
+#include "LifeTileObject.h"
 #include "Sprite.h"
 #include "Map.h"
 
@@ -137,14 +138,24 @@ void Map::Init()
 					for (int x = 0; x < _width; x++)
 					{
 						int index = atoi(token);
+						TileCell* tileCell = rowList[x];
+						WCHAR componentName[256];
+						wsprintf(componentName, L"MapData_02_%d_%d", line, x);
 						if (0 <= index)
 						{
-							TileCell* tileCell = rowList[x];
-							WCHAR componentName[256];
-							wsprintf(componentName, L"MapData_2_%d_%d", line, x);
-							TileObject* tileObject = new TileObject(componentName, _spriteList[index]);
-							tileCell->AddComponent(tileObject, true);
+							if (100100 == index)
+							{
+								LifeTileObject* lifeTileObject = new LifeTileObject(componentName, _spriteList[50]);
+								lifeTileObject->SetCanMove(true);
+								tileCell->AddComponent(lifeTileObject, true);
+							}
+							else
+							{
+								TileObject* tileObject = new TileObject(componentName, _spriteList[index]);
+								tileCell->AddComponent(tileObject, true);
+							}
 						}
+								
 						token = strtok(NULL, ",");
 					}
 					row++;

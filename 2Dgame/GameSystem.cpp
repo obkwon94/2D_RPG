@@ -307,6 +307,13 @@ int GameSystem::Update()
 					_stage = new Stage();
 					_stage->Init(L"MapData02");
 				}
+				if (IsKeyDown(VK_F2))
+				{
+					ComponentSystem::GetInstance()->ClearMessageQueue();
+					delete _stage;
+					_stage = new Stage();
+					_stage->Init(L"MapData03");
+				}
 			}
 		}
 	}
