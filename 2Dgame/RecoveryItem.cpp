@@ -7,7 +7,7 @@
 #include "TileObject.h"
 #include "RecoveryItem.h"
 
-RecoveryItem::RecoveryItem(LPCWSTR name, LPCWSTR scriptFilename, LPCWSTR textureFilename) : Component(name)
+RecoveryItem::RecoveryItem(std::wstring name, std::wstring scriptFilename, std::wstring textureFilename) : Component(name)
 {
 	_sprite = NULL;
 	_type = eComponentType::CT_ITEM;

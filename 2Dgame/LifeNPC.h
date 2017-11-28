@@ -4,7 +4,7 @@
 class LifeNPC : public Character
 {
 public:
-	LifeNPC(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFileName);
+	LifeNPC(std::wstring name, std::wstring scriptName, std::wstring textureFileName);
 	~LifeNPC();
 
 	void UpdateAI(float deltaTime);

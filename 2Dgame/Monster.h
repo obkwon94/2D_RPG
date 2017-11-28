@@ -5,7 +5,7 @@
 class Monster : public Character
 {
 public:
-	Monster(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFileName);
+	Monster(std::wstring name, std::wstring scriptName, std::wstring textureFileName);
 	~Monster();
 
 	

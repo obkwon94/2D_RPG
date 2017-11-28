@@ -13,7 +13,7 @@ private:
 	float _posY;
 
 public:
-	TileObject(LPCWSTR name, Sprite* sprite);
+	TileObject(std::wstring name, Sprite* sprite);
 	virtual ~TileObject();
 
 	void Init() ;

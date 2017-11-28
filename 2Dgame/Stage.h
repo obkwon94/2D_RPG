@@ -23,4 +23,11 @@ private:
 	Map* _map;
 public:
 	Map* GetMap() { return _map; }
+
+	//NPC
+private:
+	int _lifeNPCcount;
+public:
+	void CreateLifeNPC(int tileX, int tileY);
+	void DestroyLifeNPC(int tileX, int tileY, Component* tileCharacter);
 };

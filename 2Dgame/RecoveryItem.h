@@ -15,7 +15,7 @@ private:
 	std::wstring _textureFilename;
 
 public:
-	RecoveryItem(LPCWSTR name, LPCWSTR scriptFilename, LPCWSTR textureFilename);
+	RecoveryItem(std::wstring name, std::wstring scriptFilename, std::wstring textureFilename);
 	~RecoveryItem();
 
 	void Init();

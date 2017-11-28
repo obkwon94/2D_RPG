@@ -17,7 +17,7 @@ class Component
 {
 protected:
 	eComponentType _type;
-	LPCWSTR _name;
+	std::wstring _name;
 	bool _canMove;
 
 	int _tileX;
@@ -32,7 +32,7 @@ public:
 		_canMove = false;
 	}
 
-	Component(LPCWSTR name);
+	Component(std::wstring name);
 	virtual ~Component();
 
 	virtual void Init() = 0;

@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <vector>
 #include <list>
+#include <string>
 #include <map>
 #include "Component.h"
 
@@ -40,10 +41,11 @@ protected:
 	float _y;
 	
 public:
-	Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFileName);
+	Character(std::wstring name, std::wstring scriptName, std::wstring textureFileName);
 	~Character();
 
 	void Init();
+	void Init(int tileX, int tileY);
 	void DeInit();
 	void Update(float deltaTime);
 	void Render();

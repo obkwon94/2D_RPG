@@ -5,7 +5,7 @@
 #include "MoveState.h"
 #include "Monster.h"
 
-Monster::Monster(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFileName) : Character(name, scriptName, textureFileName)
+Monster::Monster(std::wstring name, std::wstring scriptName, std::wstring textureFileName) : Character(name, scriptName, textureFileName)
 {
 	_type = eComponentType::CT_MONSTER;
 

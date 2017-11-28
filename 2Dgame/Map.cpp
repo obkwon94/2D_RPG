@@ -7,7 +7,7 @@
 #include "Map.h"
 
 
-Map::Map(LPCWSTR name) : Component(name)
+Map::Map(std::wstring name) : Component(name)
 {
 	_startX = 0.0f;
 	_startY = 0.0f;
@@ -145,7 +145,7 @@ void Map::Init()
 						{
 							if (100100 == index)
 							{
-								LifeTileObject* lifeTileObject = new LifeTileObject(componentName, _spriteList[50]);
+								LifeTileObject* lifeTileObject = new LifeTileObject(x, row, componentName, _spriteList[50]);
 								lifeTileObject->SetCanMove(true);
 								tileCell->AddComponent(lifeTileObject, true);
 							}

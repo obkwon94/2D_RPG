@@ -1,7 +1,7 @@
 #include "Sprite.h"
 #include "TileObject.h"
 
-TileObject::TileObject(LPCWSTR name, Sprite* sprite) : Component(name)
+TileObject::TileObject(std::wstring name, Sprite* sprite) : Component(name)
 {
 	_sprite = sprite;
 }

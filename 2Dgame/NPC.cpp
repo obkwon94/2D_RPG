@@ -5,7 +5,7 @@
 #include "MoveState.h"
 #include "NPC.h"
 
-NPC::NPC(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFileName) : Character(name, scriptName, textureFileName)
+NPC::NPC(std::wstring name, std::wstring scriptName, std::wstring textureFileName) : Character(name, scriptName, textureFileName)
 {
 	_type = eComponentType::CT_NPC;
 

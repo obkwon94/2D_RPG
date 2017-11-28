@@ -5,7 +5,7 @@
 #include "MoveState.h"
 #include "Player.h"
 
-Player::Player(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFileName) : Character(name, scriptName, textureFileName)
+Player::Player(std::wstring name, std::wstring scriptName, std::wstring textureFileName) : Character(name, scriptName, textureFileName)
 {
 	_type = eComponentType::CT_PLAYER;
 	_moveTime = 0.1f;

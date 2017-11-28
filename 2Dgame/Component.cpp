@@ -1,7 +1,7 @@
 #include "ComponentSystem.h"
 #include "Component.h"
 
-Component::Component(LPCWSTR name)
+Component::Component(std::wstring name)
 {
 	_type = eComponentType::CT_NONE;
 	_name = name;

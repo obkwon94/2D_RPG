@@ -13,7 +13,7 @@
 #include "Character.h"
 
 
-Character::Character(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFileName) : Component(name)
+Character::Character(std::wstring name, std::wstring scriptName, std::wstring textureFileName) : Component(name)
 {
 	_state = NULL;
 	_moveTime = 1.0f;
@@ -100,6 +100,59 @@ void Character::Init()
 	}
 }
 
+void Character::Init(int tileX, int tileY)
+{
+	//character test
+	{
+		//Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
+		Map* map = GameSystem::GetInstance()->GetStage()->GetMap();
+
+
+		_x = map->GetPositionX(tileX, tileY);
+		_y = map->GetPositionY(tileX, tileY);
+
+		map->SetTileComponent(tileX, tileY, this, true);
+	}
+	InitMove();
+
+	{
+		State* state = new IdleState();
+		state->Init(this);
+		_stateMap[eStateType::ET_IDLE] = state;
+	}
+	{
+		State* state = new MoveState();
+		state->Init(this);
+		_stateMap[eStateType::ET_MOVE] = state;
+	}
+	{
+		State* state = new AttackState();
+		state->Init(this);
+		_stateMap[eStateType::ET_ATTACK] = state;
+	}
+	{
+		State* state = new DefenceState();
+		state->Init(this);
+		_stateMap[eStateType::ET_DEFENCE] = state;
+	}
+	{
+		State* state = new DeadState();
+		state->Init(this);
+		_stateMap[eStateType::ET_DEAD] = state;
+	}
+	ChangeState(eStateType::ET_IDLE);
+
+
+	//Font
+	{
+		D3DCOLOR color = D3DCOLOR_ARGB(255, 0, 0, 0);
+		_font = new Font(L"Arial", 25, color);
+
+		_font->SetRect(100, 100, 400, 100);
+		UpdateText();
+	}
+}
+
 void Character::DeInit()
 {
 	std::map<eStateType, State*>::iterator it = _stateMap.begin();
@@ -114,6 +167,9 @@ void Character::DeInit()
 
 void Character::Update(float deltaTime)
 {
+	if (false == _isLive)
+		return;
+
 	UpdateAttackCooltime(deltaTime);
 	_state->Update(deltaTime);
 	UpdateText();
@@ -121,6 +177,9 @@ void Character::Update(float deltaTime)
 
 void Character::Render()
 {
+	if (false == _isLive)
+		return;
+
 	_state->Render();
 
 	_font->SetPosition(_x-200, _y-70);

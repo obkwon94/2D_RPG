@@ -26,7 +26,7 @@ private:
 	std::vector<Sprite*> _spriteList;
 
 public:
-	Map(LPCWSTR name);
+	Map(std::wstring name);
 	~Map();
 	void Init();
 	void DeInit();

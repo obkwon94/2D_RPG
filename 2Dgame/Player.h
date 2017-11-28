@@ -4,7 +4,7 @@
 class Player : public Character
 {
 public:
-	Player(LPCWSTR name, LPCWSTR scriptName, LPCWSTR textureFileName);
+	Player(std::wstring name, std::wstring scriptName, std::wstring textureFileName);
 	~Player();
 
 	//AI
