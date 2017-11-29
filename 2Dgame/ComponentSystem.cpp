@@ -48,6 +48,12 @@ void ComponentSystem::RemoveAllComponents()
 	_componentMap.clear();
 }
 
+void ComponentSystem::RemoveComponent(Component* component)
+{
+	_componentMap.erase(component->GetName());
+	delete component;
+}
+
 Component* ComponentSystem::FindComponent(std::wstring name)
 {
 	std::map<std::wstring, Component*>::iterator it = _componentMap.find(name);
@@ -134,3 +140,4 @@ void ComponentSystem::ClearMessageQueue()
 		_msgQueue.pop();
 	}
 }
+

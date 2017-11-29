@@ -58,7 +58,7 @@ void Character::Init()
 		_x = map->GetPositionX(_tileX, _tileY);
 		_y = map->GetPositionY(_tileX, _tileY);
 
-		map->SetTileComponent(_tileX, _tileY, this, true);
+		map->SetTileComponent(_tileX, _tileY, this, false);
 	}
 	InitMove();
 
@@ -111,7 +111,7 @@ void Character::Init(int tileX, int tileY)
 		_x = map->GetPositionX(tileX, tileY);
 		_y = map->GetPositionY(tileX, tileY);
 
-		map->SetTileComponent(tileX, tileY, this, true);
+		map->SetTileComponent(tileX, tileY, this, false);
 	}
 	InitMove();
 
@@ -264,7 +264,7 @@ void Character::MoveStart(int newTileX, int newTileY)
 	_tileX = newTileX;
 	_tileY = newTileY;
 
-	map->SetTileComponent(_tileX, _tileY, this, true);
+	map->SetTileComponent(_tileX, _tileY, this, false);
 
 	//자연스러운 움직임을 위한 보간 작업
 	{
@@ -291,7 +291,7 @@ void Character::MoveStop()
 	//Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
 	Map* map = GameSystem::GetInstance()->GetStage()->GetMap();
 	_x = map->GetPositionX(_tileX, _tileY);
-	_y = map->GetPositionY(_tileX, _tileY);;
+	_y = map->GetPositionY(_tileX, _tileY);
 
 	_moveDistancePerTimeX = 0.0f;
 	_moveDistancePerTimeY = 0.0f;

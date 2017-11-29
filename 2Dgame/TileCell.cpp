@@ -51,7 +51,7 @@ void TileCell::SetPosition(float posX, float posY)
 	_posY = posY;
 	//_sprite->SetPosition(posX, posY);
 
-	for (std::list<Component*>::iterator it = _renderList.begin(); it != _renderList.end(); it++)
+	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
 	{
 		(*it)->SetPosition(posX, posY);
 	}
@@ -63,7 +63,7 @@ void TileCell::MoveDeltaPosition(float deltaX, float deltaY)
 	_posY += deltaY;
 	//_sprite->SetPosition(_posX, _posY);
 
-	for (std::list<Component*>::iterator it = _renderList.begin(); it != _renderList.end(); it++)
+	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
 	{
 		(*it)->MoveDeltaPosition(deltaX, deltaY);
 	}
@@ -102,7 +102,7 @@ void TileCell::RemoveComponent(Component* component)
 
 bool TileCell::CanMove()
 {
-	for (std::list<Component*>::iterator it = _renderList.begin(); it != _renderList.end(); it++)
+	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
 	{
 		if (false == (*it)->CanMove())
 			return false;
@@ -115,7 +115,7 @@ bool TileCell::GetTileCollisionList(std::list<Component*>& collisionList)
 {
 	collisionList.clear();
 
-	for (std::list<Component*>::iterator it = _renderList.begin(); it != _renderList.end(); it++)
+	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
 	{
 		if (false == (*it)->CanMove())
 		{

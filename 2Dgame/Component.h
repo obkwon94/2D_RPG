@@ -68,4 +68,9 @@ public:
 	bool IsLive() { return _isLive; }
 	void SetLive(bool isLive) { _isLive = isLive; }
 
+
+	//Name
+
+public:
+	std::wstring GetName(){	return _name; }
 }; 

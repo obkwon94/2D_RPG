@@ -27,7 +27,7 @@ void Stage::Init(std::wstring mapName)
 	if (L"MapData03" == mapName)
 	{
 		_lifeNPCcount = 0;
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < 100; i++)
 		{
 			WCHAR name[256];
 			wsprintf(name, L"lifeNPC%d", i);
@@ -39,7 +39,7 @@ void Stage::Init(std::wstring mapName)
 	}
 	else
 	{
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 0; i++)
 		{
 			WCHAR name[256];
 			wsprintf(name, L"recover_item_%d", i);
@@ -49,7 +49,7 @@ void Stage::Init(std::wstring mapName)
 
 
 
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 0; i++)
 		{
 			WCHAR name[256];
 			wsprintf(name, L"npc_%d", i);
@@ -61,7 +61,7 @@ void Stage::Init(std::wstring mapName)
 		//NPC* npc = new NPC(L"npc", L"npc", L"character_sprite2");
 		//_componentList.push_back(npc);
 
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 0; i++)
 		{
 			WCHAR name[256];
 			wsprintf(name, L"monster_%d", i);
@@ -131,4 +131,7 @@ void Stage::DestroyLifeNPC(int tileX, int tileY, Component* tileCharacter)
 	_map->ResetTileComponent(tileX, tileY, tileCharacter);
 	tileCharacter->SetCanMove(true);
 	tileCharacter->SetLive(false);
+
+	_componentList.remove(tileCharacter);
+	ComponentSystem::GetInstance()->RemoveComponent(tileCharacter);
 }

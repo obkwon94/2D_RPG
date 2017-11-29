@@ -35,6 +35,8 @@ private:
 public:
 	void AddComponent(std::wstring name, Component* com);
 	void RemoveAllComponents();
+
+	void RemoveComponent(Component* tileCharacter);
 	Component* FindComponent(std::wstring name);
 
 	Component* FindComponentInRange(Component* mapComp, Component* chaser, int range, std::vector<eComponentType> compareTypeList);
@@ -48,4 +50,10 @@ public:
 	void ProcessMsgQueue();
 	void UpdateMsg(float deltaTime);
 	void ClearMessageQueue();
+
+	//Name
+
+
+public:
+	std::wstring GetName();
 };

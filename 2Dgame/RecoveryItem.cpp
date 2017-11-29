@@ -40,7 +40,7 @@ void RecoveryItem::Init()
 	}
 	_x = map->GetPositionX(_tileX, _tileY);
 	_y = map->GetPositionY(_tileX, _tileY);
-	map->SetTileComponent(_tileX, _tileY, this, true);
+	map->SetTileComponent(_tileX, _tileY, this, false);
 	
 	WCHAR textureFilename[256];
 	wsprintf(textureFilename, L"%s.png", _textureFilename.c_str());

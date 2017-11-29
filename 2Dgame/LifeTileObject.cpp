@@ -57,6 +57,25 @@ void LifeTileObject::Update(float deltaTime)
 						{
 						case eComponentType::CT_NPC:
 						case eComponentType::CT_PLAYER:
+							
+							surroundedCharacter++;
+							break;
+						}
+					}
+				}
+			}
+			else
+			{
+				std::list<Component*> componentList;
+				if (false == map->GetTileCollisionList(x, y, componentList))
+				{
+					for (std::list<Component*>::iterator it = componentList.begin(); it != componentList.end(); it++)
+					{
+						Component* component = (*it);
+						switch (component->GetType())
+						{
+						case eComponentType::CT_NPC:
+						case eComponentType::CT_PLAYER:
 							//isTileCharacter = true;
 							tileCharacter = component;
 							break;
@@ -82,7 +101,7 @@ void LifeTileObject::Update(float deltaTime)
 	else
 	{
 		//dead
-		if (NULL == tileCharacter)
+		if (NULL != tileCharacter)
 		{
 			if (eComponentType::CT_PLAYER != tileCharacter->GetType())
 			{
