@@ -31,7 +31,7 @@ void MoveState::Update(float deltaTime)
 		_character->ChangeState(_nextState);
 		return;
 	}
-
+	/*
 	if (false == _character->IsLive())
 		return;
 
@@ -50,30 +50,17 @@ void MoveState::Update(float deltaTime)
 		_movingDuration += deltaTime;
 		_character->Moving(deltaTime);
 	}
-
-
-}
-/*
-void MoveState::UpdateMove(float deltaTime)
-{
-	_movingDuration += deltaTime;
-}
-
-bool MoveState::isMoving()
-{
-	return _isMoving;
+	*/
+	if (_character->GetMoveTime() <= _movingDuration)
+	{
+		_nextState = eStateType::ET_IDLE;
+	}
+	else
+	{
+		_movingDuration += deltaTime;
+	}
 }
 
-void MoveState::SetMoving(bool isMoving)
-{
-	_isMoving = isMoving;
-}
-
-float MoveState::GetMovingDuration()
-{
-	return _movingDuration;
-}
-*/
 void MoveState::Start()
 {
 	State::Start();
@@ -133,16 +120,14 @@ void MoveState::Start()
 	}
 	else
 	{
-		//_isMoving = true;
+
 		_character->MoveStart(newTileX, newTileY);
+		_character->MoveStop();
+		_movingDuration = 0.0f;
 	}
 }
 
 void MoveState::Stop()
 {
 	State::Stop();
-	/*
-	_movingDuration = 0.0f;
-	_isMoving = false;
-	*/
 }

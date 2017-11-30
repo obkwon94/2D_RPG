@@ -49,13 +49,13 @@ void AttackState::Reset()
 void AttackState::Start()
 {
 	State::Start();
-
+	
 	sComponentMsgParam msgParam;
 	msgParam.sender = (Component*) _character;
 	msgParam.attackPoint = _character->GetAttackPoint();
 	msgParam.receiver = _character->GetTarget();
 	msgParam.message = L"Attack";
-	ComponentSystem::GetInstance()->SendMsg(msgParam);
+	//ComponentSystem::GetInstance()->SendMsg(msgParam);
 }
 
 void AttackState::Stop()

@@ -181,6 +181,7 @@ void Map::DeInit()
 
 void Map::Update(float deltaTime)
 {
+	/*
 	for (int y = 0; y < _height; y++)
 	{
 		for (int x = 0; x < _width; x++)
@@ -195,6 +196,30 @@ void Map::Update(float deltaTime)
 		float deltaX = _viewer->GetMoveDeltaX() * deltaTime;
 		float deltaY = _viewer->GetMoveDeltaY() * deltaTime;
 		Scroll(-deltaX, -deltaY);
+	}
+	*/
+	//뷰어를 중심으로 렌더링 할 영역을 구한다.
+	int midX = GameSystem::GetInstance()->GetClientWidth() / 2;
+	int midY = GameSystem::GetInstance()->GetClientHeight() / 2;
+
+	//뷰어의 위치를 기준으로 시작 픽셀 위치를 계산
+	_startX = (-_viewer->GetTileX() * _tileSize) + midX - _tileSize / 2;
+	_startY = (-_viewer->GetTileY() * _tileSize) + midY - _tileSize / 2;
+
+	//해당 위치에 타일을 그린다
+	float posX = _startX;
+	float posY = _startY;
+
+	for (int y = 0; y < _height; y++)
+	{
+		for (int x = 0; x < _width; x++)
+		{
+			_tileMap[y][x]->SetPosition(posX, posY);
+			_tileMap[y][x]->Update(deltaTime);
+			posX += _tileSize;
+		}
+		posX = _startX;
+		posY += _tileSize;
 	}
 }
 

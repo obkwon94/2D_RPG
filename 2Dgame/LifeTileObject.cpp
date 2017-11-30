@@ -23,8 +23,9 @@ void LifeTileObject::Update(float deltaTime)
 	// 주변 8칸을 탐색 - 캐릭터가 몇마리 있는지
 	Map* map = GameSystem::GetInstance()->GetStage()->GetMap();
 
-	int surroundedCharacter = 0;
+	int countCharacter = 0;
 	int range = 1;
+
 	int minTileX = _tileX - range;
 	int maxTileX = _tileX + range;
 	int minTileY = _tileY - range;
@@ -35,7 +36,7 @@ void LifeTileObject::Update(float deltaTime)
 	if (minTileX < 0)
 		minTileX = 0;
 	if (map->GetWidth() <= maxTileX)
-		maxTileX = map->GetWidth() -1;
+		maxTileX = map->GetWidth() - 1;
 	if (minTileY < 0)
 		minTileY = 0;
 	if (map->GetHeight() <= maxTileY)
@@ -58,7 +59,7 @@ void LifeTileObject::Update(float deltaTime)
 						case eComponentType::CT_NPC:
 						case eComponentType::CT_PLAYER:
 							
-							surroundedCharacter++;
+							countCharacter++;
 							break;
 						}
 					}
@@ -86,15 +87,15 @@ void LifeTileObject::Update(float deltaTime)
 		}
 	}
 
-	if (3 == surroundedCharacter)
+	if (3 == countCharacter)
 	{
-		//if (false == isTileCharacter)
 		if (NULL == tileCharacter)
 		{
-			GameSystem::GetInstance()->GetStage()->CreateLifeNPC(_tileX, _tileY);
+			//GameSystem::GetInstance()->GetStage()->CreateLifeNPC(_tileX, _tileY);
+			GameSystem::GetInstance()->GetStage()->CreateLifeNPC(this);
 		}
 	}
-	else if (2 == surroundedCharacter)
+	else if (2 == countCharacter)
 	{
 		//skip
 	}
@@ -105,7 +106,8 @@ void LifeTileObject::Update(float deltaTime)
 		{
 			if (eComponentType::CT_PLAYER != tileCharacter->GetType())
 			{
-				GameSystem::GetInstance()->GetStage()->DestroyLifeNPC(_tileX, _tileY, tileCharacter);
+				//GameSystem::GetInstance()->GetStage()->DestroyLifeNPC(_tileX, _tileY, tileCharacter);
+				GameSystem::GetInstance()->GetStage()->CheckDestroyLifeNPC(tileCharacter);
 				tileCharacter = NULL;
 			}
 

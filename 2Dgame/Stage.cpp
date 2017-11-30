@@ -27,7 +27,7 @@ void Stage::Init(std::wstring mapName)
 	if (L"MapData03" == mapName)
 	{
 		_lifeNPCcount = 0;
-		for (int i = 0; i < 100; i++)
+		for (int i = 0; i < 70; i++)
 		{
 			WCHAR name[256];
 			wsprintf(name, L"lifeNPC%d", i);
@@ -75,7 +75,7 @@ void Stage::Init(std::wstring mapName)
 	
 	Player* player = new Player(L"player", L"player", L"player");
 	_componentList.push_back(player);
-
+	
 	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
 	{
 		(*it)->Init();
@@ -90,6 +90,9 @@ void Stage::Update(float deltaTime)
 	{
 		(*it)->Update(deltaTime);
 	}
+
+	UpdateBaseComponentList();
+	UpdateRemoveComponentList();
 }
 
 void Stage::Render()
@@ -116,22 +119,61 @@ void Stage::Reset()
 	}
 }
 
-void Stage::CreateLifeNPC(int tileX, int tileY)
+void Stage::CreateLifeNPC(Component* component)
 {
+	/*
 	WCHAR name[256];
 	wsprintf(name, L"lifeNPC%d", _lifeNPCcount);
 	_lifeNPCcount++;
+
 	LifeNPC* lifeNPC = new LifeNPC(name, L"npc", L"character_sprite2");
 	lifeNPC->Init(tileX, tileY);
+
 	_componentList.push_back(lifeNPC);
+	*/
+	_createBaseComponentList.push_back(component);
 }
 
-void Stage::DestroyLifeNPC(int tileX, int tileY, Component* tileCharacter)
+void Stage::UpdateBaseComponentList()
 {
-	_map->ResetTileComponent(tileX, tileY, tileCharacter);
-	tileCharacter->SetCanMove(true);
-	tileCharacter->SetLive(false);
+	for (std::list<Component*>::iterator it = _createBaseComponentList.begin(); it != _createBaseComponentList.end(); it++)
+	{
+		Component* baseComponent = (*it);
 
-	_componentList.remove(tileCharacter);
-	ComponentSystem::GetInstance()->RemoveComponent(tileCharacter);
+		WCHAR name[256];
+		wsprintf(name, L"lifeNPC%d", _lifeNPCcount);
+		_lifeNPCcount++;
+
+		LifeNPC* lifeNPC = new LifeNPC(name, L"npc", L"character_sprite2");
+		lifeNPC->Init(baseComponent->GetTileX(), baseComponent->GetTileY());
+		_componentList.push_back(lifeNPC);
+	}
+	_createBaseComponentList.clear();
+}
+
+void Stage::UpdateRemoveComponentList()
+{
+	for (std::list<Component*>::iterator it = _removeComponentList.begin(); it != _removeComponentList.end(); it++)
+	{
+		Component* com = (*it);
+		DestroyLifeNPC(com->GetTileX(), com->GetTileY(), com);
+	}
+
+	_removeComponentList.clear();
+}
+
+void Stage::CheckDestroyLifeNPC(Component* component)
+{
+	_removeComponentList.push_back(component);
+}
+
+void Stage::DestroyLifeNPC(int tileX, int tileY, Component* component)
+{
+	_map->ResetTileComponent(tileX, tileY, component);
+
+	component->SetCanMove(true);
+	component->SetLive(false);
+
+	_componentList.remove(component);
+	ComponentSystem::GetInstance()->RemoveComponent(component);
 }

@@ -43,6 +43,7 @@ void Character::Init()
 
 		int tileX = rand() % (map->GetWidth() - 1) + 1;
 		int tileY = rand() % (map->GetHeight() - 1) + 1;
+		
 		while (1)
 		{
 			if (true == map->CanMoveTileMap(tileX, tileY))
@@ -54,7 +55,9 @@ void Character::Init()
 			tileX = rand() % (map->GetWidth() - 1) + 1;
 			tileY = rand() % (map->GetHeight() - 1) + 1;
 		}
-
+		
+		_tileX = tileX;
+		_tileY = tileY;
 		_x = map->GetPositionX(_tileX, _tileY);
 		_y = map->GetPositionY(_tileX, _tileY);
 
@@ -107,6 +110,8 @@ void Character::Init(int tileX, int tileY)
 		//Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
 		Map* map = GameSystem::GetInstance()->GetStage()->GetMap();
 
+		_tileX = tileX;
+		_tileY = tileY;
 
 		_x = map->GetPositionX(tileX, tileY);
 		_y = map->GetPositionY(tileX, tileY);

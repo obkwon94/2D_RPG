@@ -27,7 +27,12 @@ public:
 	//NPC
 private:
 	int _lifeNPCcount;
+	std::list<Component*> _createBaseComponentList;
+	std::list<Component*> _removeComponentList;
 public:
-	void CreateLifeNPC(int tileX, int tileY);
-	void DestroyLifeNPC(int tileX, int tileY, Component* tileCharacter);
+	void CreateLifeNPC(Component* component);
+	void UpdateBaseComponentList();
+	void UpdateRemoveComponentList();
+	void CheckDestroyLifeNPC(Component* component);
+	void DestroyLifeNPC(int tileX, int tileY, Component* component);
 };
