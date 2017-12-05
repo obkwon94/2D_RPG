@@ -251,6 +251,21 @@ void Character::ChangeState(eStateType stateType)
 	_state->Start();
 }
 
+void Character::ReplaceState(eStateType changeType, State* replaceState)
+{
+
+	std::map <eStateType, State*>::iterator it = _stateMap.find(changeType);
+	if (it != _stateMap.end())
+	{
+		delete _stateMap[changeType];
+		_stateMap.erase(changeType);
+	}
+
+	State* state = replaceState;
+	state->Init(this);
+	_stateMap[changeType] = state;
+}
+
 void Character::InitMove()
 {
 	_isMoving = false;

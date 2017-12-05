@@ -106,7 +106,7 @@ private:
 
 public:
 	void ChangeState(eStateType stateType);
-
+	void ReplaceState(eStateType changeType, State* replaceState);
 
 	//Action
 protected:

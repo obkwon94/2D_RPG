@@ -1,20 +1,27 @@
 #include "ComponentSystem.h"
 #include "Map.h"
+#include "LifeStageLoader.h"
 #include "Monster.h"
 #include "NPC.h"
 #include "LifeNPC.h"
 #include "Player.h"
+#include "LifePlayer.h"
 #include "RecoveryItem.h"
 #include "Stage.h"
 
 Stage::Stage()
 {
-
+	_lifeStageLoader = NULL;
 }
 
 Stage::~Stage()
 {
 	ComponentSystem::GetInstance()->RemoveAllComponents();
+	if (NULL != _lifeStageLoader)
+	{
+		delete _lifeStageLoader;
+		_lifeStageLoader = NULL;
+	}
 }
 
 void Stage::Init(std::wstring mapName)
@@ -24,30 +31,23 @@ void Stage::Init(std::wstring mapName)
 	_map = new Map(mapName.c_str());
 	_componentList.push_back(_map);
 
-	if (L"MapData03" == mapName)
-	{
-		_lifeNPCcount = 0;
-		for (int i = 0; i < 70; i++)
-		{
-			WCHAR name[256];
-			wsprintf(name, L"lifeNPC%d", i);
-			_lifeNPCcount++;
-			LifeNPC* lifeNPC = new LifeNPC(name, L"npc", L"character_sprite2");
-			_componentList.push_back(lifeNPC);
 
-		}
+	Player* player;
+	if (L"Map3" == mapName)
+	{
+		_lifeStageLoader = new LifeStageLoader(this);
+
+		_lifeStageLoader->CreateComponents(100);
 	}
 	else
 	{
 		for (int i = 0; i < 0; i++)
 		{
 			WCHAR name[256];
-			wsprintf(name, L"recover_item_%d", i);
+			wsprintf(name, L"recovery_item_%d", i);
 			RecoveryItem* item = new RecoveryItem(name, L"recovery_item", L"item_sprites");
 			_componentList.push_back(item);
 		}
-
-
 
 		for (int i = 0; i < 0; i++)
 		{
@@ -57,10 +57,6 @@ void Stage::Init(std::wstring mapName)
 			_componentList.push_back(npc);
 		}
 
-
-		//NPC* npc = new NPC(L"npc", L"npc", L"character_sprite2");
-		//_componentList.push_back(npc);
-
 		for (int i = 0; i < 0; i++)
 		{
 			WCHAR name[256];
@@ -69,19 +65,20 @@ void Stage::Init(std::wstring mapName)
 			_componentList.push_back(monster);
 		}
 
-		//Monster* monster = new Monster(L"monster", L"monster", L"monster");
-		//_componentList.push_back(monster);
+		NPC* npc = new NPC(L"npc", L"npc", L"character_sprite2");
+		_componentList.push_back(npc);
+
+		player = new Player(L"player", L"player", L"player");
 	}
-	
-	Player* player = new Player(L"player", L"player", L"player");
+
 	_componentList.push_back(player);
-	
+
 	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
 	{
 		(*it)->Init();
 	}
-
 	_map->InitViewer(player);
+
 }
 
 void Stage::Update(float deltaTime)
@@ -121,17 +118,21 @@ void Stage::Reset()
 
 void Stage::CreateLifeNPC(Component* component)
 {
-	/*
-	WCHAR name[256];
-	wsprintf(name, L"lifeNPC%d", _lifeNPCcount);
-	_lifeNPCcount++;
-
-	LifeNPC* lifeNPC = new LifeNPC(name, L"npc", L"character_sprite2");
-	lifeNPC->Init(tileX, tileY);
-
-	_componentList.push_back(lifeNPC);
-	*/
+	component->GetTileX();
 	_createBaseComponentList.push_back(component);
+}
+
+void Stage::DestroyNPC(int tileX, int tileY, Component* tileCharacter)
+{
+	_map->ResetTileComponent(tileX, tileY, tileCharacter);
+
+	_componentList.remove(tileCharacter);
+	ComponentSystem::GetInstance()->RemoveComponent(tileCharacter);
+}
+
+void Stage::CheckDestroyNPC(Component* component)
+{
+	_removeComponentList.push_back(component);
 }
 
 void Stage::UpdateBaseComponentList()
@@ -140,13 +141,9 @@ void Stage::UpdateBaseComponentList()
 	{
 		Component* baseComponent = (*it);
 
-		WCHAR name[256];
-		wsprintf(name, L"lifeNPC%d", _lifeNPCcount);
-		_lifeNPCcount++;
+		LifeNPC* npc = (LifeNPC*)_lifeStageLoader->CreateLifeNPC(L"npc", L"character_sprite2");
 
-		LifeNPC* lifeNPC = new LifeNPC(name, L"npc", L"character_sprite2");
-		lifeNPC->Init(baseComponent->GetTileX(), baseComponent->GetTileY());
-		_componentList.push_back(lifeNPC);
+		npc->Init(baseComponent->GetTileX(), baseComponent->GetTileY());
 	}
 	_createBaseComponentList.clear();
 }
@@ -156,24 +153,12 @@ void Stage::UpdateRemoveComponentList()
 	for (std::list<Component*>::iterator it = _removeComponentList.begin(); it != _removeComponentList.end(); it++)
 	{
 		Component* com = (*it);
-		DestroyLifeNPC(com->GetTileX(), com->GetTileY(), com);
+		DestroyNPC(com->GetTileX(), com->GetTileY(), com);
 	}
-
 	_removeComponentList.clear();
 }
 
-void Stage::CheckDestroyLifeNPC(Component* component)
+void Stage::AddStageComponent(Component* component)
 {
-	_removeComponentList.push_back(component);
-}
-
-void Stage::DestroyLifeNPC(int tileX, int tileY, Component* component)
-{
-	_map->ResetTileComponent(tileX, tileY, component);
-
-	component->SetCanMove(true);
-	component->SetLive(false);
-
-	_componentList.remove(component);
-	ComponentSystem::GetInstance()->RemoveComponent(component);
+	_componentList.push_back(component);
 }

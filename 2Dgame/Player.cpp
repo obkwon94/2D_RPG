@@ -2,7 +2,11 @@
 #include "GameSystem.h"
 #include "Stage.h"
 #include "Map.h"
+#include "IdleState.h"
 #include "MoveState.h"
+#include "AttackState.h"
+#include "DefenceState.h"
+#include "DeadState.h"
 #include "Player.h"
 
 Player::Player(std::wstring name, std::wstring scriptName, std::wstring textureFileName) : Character(name, scriptName, textureFileName)
@@ -89,4 +93,13 @@ Component* Player::Collision(std::list<Component*>& collisionList)
 		}
 	}
 	return NULL;
+}
+
+void Player::InitState()
+{
+	ReplaceState(eStateType::ET_IDLE, new IdleState());
+	ReplaceState(eStateType::ET_MOVE, new MoveState());
+	ReplaceState(eStateType::ET_ATTACK, new AttackState());
+	ReplaceState(eStateType::ET_DEFENCE, new DefenceState());
+	ReplaceState(eStateType::ET_DEAD, new DeadState());
 }

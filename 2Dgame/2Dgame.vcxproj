@@ -31,6 +31,8 @@
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="LifeNPC.cpp" />
+    <ClCompile Include="LifePlayer.cpp" />
+    <ClCompile Include="LifeStageLoader.cpp" />
     <ClCompile Include="LifeTileObject.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Monster.cpp" />
@@ -61,6 +63,8 @@
     <ClInclude Include="GameTimer.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="LifeNPC.h" />
+    <ClInclude Include="LifePlayer.h" />
+    <ClInclude Include="LifeStageLoader.h" />
     <ClInclude Include="LifeTileObject.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Monster.h" />
@@ -130,8 +134,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>../SDK/Include;../SDK/json;$(IncludePath)</IncludePath>
-    <LibraryPath>../SDK/Lib/x86;../SDK/json;$(LibraryPath)</LibraryPath>
+    <IncludePath>../SDK/Include;../SDK/json/include;$(IncludePath)</IncludePath>
+    <LibraryPath>../SDK/Lib/x86;../SDK/json/lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>

@@ -107,7 +107,7 @@ void LifeTileObject::Update(float deltaTime)
 			if (eComponentType::CT_PLAYER != tileCharacter->GetType())
 			{
 				//GameSystem::GetInstance()->GetStage()->DestroyLifeNPC(_tileX, _tileY, tileCharacter);
-				GameSystem::GetInstance()->GetStage()->CheckDestroyLifeNPC(tileCharacter);
+				GameSystem::GetInstance()->GetStage()->CheckDestroyNPC(tileCharacter);
 				tileCharacter = NULL;
 			}
 
