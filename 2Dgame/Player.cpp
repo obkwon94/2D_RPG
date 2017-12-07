@@ -56,19 +56,11 @@ void Player::UpdateAI(float deltaTime)
 				Component* component = (*it);
 				if (eComponentType::CT_ITEM == component->GetType())
 				{
-					/*
-					_hp = 100;
-					map->ResetTileComponent(_tileX, _tileY, component);
-					component->SetLive(false);
-					*/
-					
 					sComponentMsgParam msgParam;
 					msgParam.sender = (Component*)this;
 					msgParam.receiver = component;
 					msgParam.message = L"Use";
 					ComponentSystem::GetInstance()->SendMsg(msgParam);
-					
-
 				}
 			}
 		}

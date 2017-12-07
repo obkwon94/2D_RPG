@@ -32,7 +32,9 @@
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="LifeNPC.cpp" />
     <ClCompile Include="LifePlayer.cpp" />
-    <ClCompile Include="LifeStageLoader.cpp" />
+    <ClCompile Include="PathfinderPlayer.cpp" />
+    <ClCompile Include="PathfinderStageLoader.cpp" />
+    <ClCompile Include="StageLoader.cpp" />
     <ClCompile Include="LifeTileObject.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Monster.cpp" />
@@ -64,7 +66,9 @@
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="LifeNPC.h" />
     <ClInclude Include="LifePlayer.h" />
-    <ClInclude Include="LifeStageLoader.h" />
+    <ClInclude Include="PathfinderPlayer.h" />
+    <ClInclude Include="PathfinderStageLoader.h" />
+    <ClInclude Include="StageLoader.h" />
     <ClInclude Include="LifeTileObject.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Monster.h" />

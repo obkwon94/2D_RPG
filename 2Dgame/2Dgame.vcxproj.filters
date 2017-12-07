@@ -40,6 +40,9 @@
     <Filter Include="소스 파일\Game\Stage">
       <UniqueIdentifier>{3ee0727e-d7bc-4fe3-8ba4-dbcb7c878ecb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Stage\Loader">
+      <UniqueIdentifier>{bf088e2e-a323-404e-8b15-35158c307176}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameSystem.cpp">
@@ -123,11 +126,17 @@
     <ClCompile Include="LifeNPC.cpp">
       <Filter>소스 파일\Game\Character</Filter>
     </ClCompile>
-    <ClCompile Include="LifeStageLoader.cpp">
-      <Filter>소스 파일\Game\Stage</Filter>
-    </ClCompile>
     <ClCompile Include="LifePlayer.cpp">
       <Filter>소스 파일\Game\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="PathfinderStageLoader.cpp">
+      <Filter>소스 파일\Game\Stage\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="PathfinderPlayer.cpp">
+      <Filter>소스 파일\Game\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="StageLoader.cpp">
+      <Filter>소스 파일\Game\Stage\Loader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -212,11 +221,17 @@
     <ClInclude Include="LifeNPC.h">
       <Filter>소스 파일\Game\Character</Filter>
     </ClInclude>
-    <ClInclude Include="LifeStageLoader.h">
-      <Filter>소스 파일\Game\Stage</Filter>
-    </ClInclude>
     <ClInclude Include="LifePlayer.h">
       <Filter>소스 파일\Game\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="PathfinderStageLoader.h">
+      <Filter>소스 파일\Game\Stage\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="PathfinderPlayer.h">
+      <Filter>소스 파일\Game\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="StageLoader.h">
+      <Filter>소스 파일\Game\Stage\Loader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

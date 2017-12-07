@@ -31,26 +31,7 @@ void MoveState::Update(float deltaTime)
 		_character->ChangeState(_nextState);
 		return;
 	}
-	/*
-	if (false == _character->IsLive())
-		return;
-
-	if (false == _character->IsMoving())
-		return;
-
-	//_character->UpadateMove(deltaTime);
-	if (_character->GetMoveTime() <= _movingDuration)
-	{
-		_movingDuration = 0.0f;
-		_character->MoveStop();
-		_character->ChangeState(eStateType::ET_IDLE);
-	}
-	else
-	{
-		_movingDuration += deltaTime;
-		_character->Moving(deltaTime);
-	}
-	*/
+	
 	if (_character->GetMoveTime() <= _movingDuration)
 	{
 		_nextState = eStateType::ET_IDLE;

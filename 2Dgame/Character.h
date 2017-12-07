@@ -91,6 +91,8 @@ public:
 	eDirection GetDirection() { return _currentDirection; }
 	virtual Component* Collision(std::list<Component*>& collisionList);
 
+	void InitTilePosition(int tileX, int tileY);
+
 	//Message
 public:
 	void ReceiveMessage(const sComponentMsgParam& msgParam);

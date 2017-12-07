@@ -1,9 +1,13 @@
 #include "Sprite.h"
 #include "TileObject.h"
 
-TileObject::TileObject(std::wstring name, Sprite* sprite) : Component(name)
+TileObject::TileObject(std::wstring name, Sprite* sprite, int tileX, int tileY) : Component(name)
 {
+	_type = eComponentType::CT_TILE_OBJECT;
 	_sprite = sprite;
+
+	_tileX = tileX;
+	_tileY = tileY;
 }
 
 TileObject::~TileObject()

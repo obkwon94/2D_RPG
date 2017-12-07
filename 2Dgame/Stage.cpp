@@ -1,6 +1,6 @@
 #include "ComponentSystem.h"
 #include "Map.h"
-#include "LifeStageLoader.h"
+#include "StageLoader.h"
 #include "Monster.h"
 #include "NPC.h"
 #include "LifeNPC.h"
@@ -11,17 +11,27 @@
 
 Stage::Stage()
 {
-	_lifeStageLoader = NULL;
+	//_lifeStageLoader = NULL;
+	_stageLoader.clear();
 }
 
 Stage::~Stage()
 {
 	ComponentSystem::GetInstance()->RemoveAllComponents();
+	/*
 	if (NULL != _lifeStageLoader)
 	{
 		delete _lifeStageLoader;
 		_lifeStageLoader = NULL;
 	}
+	*/
+	for (std::map<std::wstring, StageLoader*>::iterator it = _stageLoader.begin(); it != _stageLoader.end(); it++)
+	{
+		StageLoader* loader = it->second;
+		if (NULL != loader)
+			delete loader;
+	}
+	_stageLoader.clear();
 }
 
 void Stage::Init(std::wstring mapName)
@@ -32,16 +42,22 @@ void Stage::Init(std::wstring mapName)
 	_componentList.push_back(_map);
 
 
-	Player* player;
-	if (L"Map3" == mapName)
+	Player* player = NULL;
+	/*
+	if (L"Mapdata03" == mapName)
 	{
 		_lifeStageLoader = new LifeStageLoader(this);
 
-		_lifeStageLoader->CreateComponents(100);
+		_lifeStageLoader->CreateComponents(70);
+	}
+
+	if (L"Mapdata04" == mapName)
+	{
+		_lifeStageLoader = new LifeStageLoader(this);
 	}
 	else
 	{
-		for (int i = 0; i < 0; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			WCHAR name[256];
 			wsprintf(name, L"recovery_item_%d", i);
@@ -49,7 +65,7 @@ void Stage::Init(std::wstring mapName)
 			_componentList.push_back(item);
 		}
 
-		for (int i = 0; i < 0; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			WCHAR name[256];
 			wsprintf(name, L"npc_%d", i);
@@ -57,7 +73,7 @@ void Stage::Init(std::wstring mapName)
 			_componentList.push_back(npc);
 		}
 
-		for (int i = 0; i < 0; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			WCHAR name[256];
 			wsprintf(name, L"monster_%d", i);
@@ -70,14 +86,30 @@ void Stage::Init(std::wstring mapName)
 
 		player = new Player(L"player", L"player", L"player");
 	}
+	*/
+	//_componentList.push_back(player);
 
-	_componentList.push_back(player);
+	{
+		StageLoader* loader = new LifeStageLoader(this);
+		_stageLoader[L"Mapdata03"] = loader;
+	}
+	{
+		StageLoader* loader = new DefaultStageLoader(this);
+		_stageLoader[L"default"] = loader;
+	}
 
+	std::map<std::wstring, StageParts*>::iterator it = _stageLoader.find(mapName);
+	if (it != _stageLoader.end()
+		_stageLoader[mapName]->CreateComponents();
+	else
+		_stageLoader[L"default"]->CreateComponents();
+	/*
 	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
 	{
 		(*it)->Init();
 	}
-	_map->InitViewer(player);
+	*/
+	//_map->InitViewer(player);
 
 }
 
@@ -116,6 +148,11 @@ void Stage::Reset()
 	}
 }
 
+Map* Stage::GetMap()
+{
+	return _map;
+}
+
 void Stage::CreateLifeNPC(Component* component)
 {
 	component->GetTileX();
@@ -143,7 +180,8 @@ void Stage::UpdateBaseComponentList()
 
 		LifeNPC* npc = (LifeNPC*)_lifeStageLoader->CreateLifeNPC(L"npc", L"character_sprite2");
 
-		npc->Init(baseComponent->GetTileX(), baseComponent->GetTileY());
+		//npc->Init();
+		npc->InitTilePosition(baseComponent->GetTileX(), baseComponent->GetTileY());
 	}
 	_createBaseComponentList.clear();
 }
@@ -160,5 +198,6 @@ void Stage::UpdateRemoveComponentList()
 
 void Stage::AddStageComponent(Component* component)
 {
+	component->Init();
 	_componentList.push_back(component);
 }

@@ -330,6 +330,25 @@ Component* Character::Collision(std::list<Component*>& collisionList)
 	return NULL;
 }
 
+void Character::InitTilePosition(int tileX, int tileY)
+{
+	//character test
+	{
+		//Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
+		Map* map = GameSystem::GetInstance()->GetStage()->GetMap();
+
+		map->ResetTileComponent(_tileX, _tileY, this);
+
+		_tileX = tileX;
+		_tileY = tileY;
+
+		_x = map->GetPositionX(tileX, tileY);
+		_y = map->GetPositionY(tileX, tileY);
+
+		map->SetTileComponent(tileX, tileY, this, false);
+	}
+}
+
 void Character::ReceiveMessage(const sComponentMsgParam& msgParam)
 {
 	if (false == _isLive)
