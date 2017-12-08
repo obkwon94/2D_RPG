@@ -50,6 +50,7 @@ public:
 	bool CanMoveTileMap(int tileX, int tileY);
 	bool GetTileCollisionList(int tileX, int tileY, std::list<Component*>& collisionList);
 	
-
 	void InitViewer(Component* viewer);
+
+	TileCell* GetTileCell(int tileX, int tileY);
 };

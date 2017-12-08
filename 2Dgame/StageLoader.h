@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 
-
 class Component;
 class Stage;
 
@@ -11,7 +10,7 @@ public:
 	StageLoader(Stage* stage);
 	~StageLoader();
 
-private:
+protected:
 	std::wstring _name;
 	Stage* _stage;
 	//int _lifeNPCcount;

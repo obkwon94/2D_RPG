@@ -9,6 +9,7 @@
 #include "IdleState.h"
 #include "AttackState.h"
 #include "DefenceState.h"
+#include "RecoveryState.h"
 #include "DeadState.h"
 #include "Character.h"
 
@@ -21,12 +22,17 @@ Character::Character(std::wstring name, std::wstring scriptName, std::wstring te
 	_scriptFilename = scriptName;
 	_textureFilename = textureFileName;
 
-	_hp = 100;
+	_maxHP = 100;
+	_hp = _maxHP;
 	_attackPoint = 10;
 	_damage = 0;
 
 	_attackSpeed = 0.5f;
 	_attackCooltimeDuration = 0.0f;
+
+	_recovery = 50;
+	_recoveryCooltimeDuration = 0.0f;
+	_recoveryCooltime = 3.0f;
 }
 
 Character::~Character()
@@ -119,7 +125,9 @@ void Character::Init(int tileX, int tileY)
 		map->SetTileComponent(tileX, tileY, this, false);
 	}
 	InitMove();
-
+	InitStage();
+	ChangeState(eStateType::ET_IDLE);
+	/*
 	{
 		State* state = new IdleState();
 		state->Init(this);
@@ -146,7 +154,7 @@ void Character::Init(int tileX, int tileY)
 		_stateMap[eStateType::ET_DEAD] = state;
 	}
 	ChangeState(eStateType::ET_IDLE);
-
+	*/
 
 	//Font
 	{
@@ -272,6 +280,16 @@ void Character::InitMove()
 	_currentDirection = eDirection::DOWN;
 }
 
+void Character::InitStage()
+{
+	ReplaceState(eStateType::ET_IDLE, new IdleState());
+	ReplaceState(eStateType::ET_MOVE, new MoveState());
+	ReplaceState(eStateType::ET_ATTACK, new AttackState());
+	ReplaceState(eStateType::ET_DEFENCE, new DefenceState());
+	ReplaceState(eStateType::ET_RECOVERY, new RecoveryState());
+	ReplaceState(eStateType::ET_DEAD, new DeadState());
+}
+
 void Character::MoveStart(int newTileX, int newTileY)
 {
 	//Map* map = (Map*)ComponentSystem::GetInstance()->FindComponent(L"MapData");
@@ -377,11 +395,6 @@ void Character::UpdateAttackCooltime(float deltaTime)
 	}
 }
 
-void Character::ResetAttackCooltime()
-{
-	_attackCooltimeDuration = 0.0f;
-}
-
 bool Character::IsAttackCooltime()
 {
 	if (_attackSpeed <= _attackCooltimeDuration)
@@ -389,6 +402,38 @@ bool Character::IsAttackCooltime()
 		return true;
 	}
 	return false;
+}
+
+void Character::ResetAttackCooltime()
+{
+	_attackCooltimeDuration = 0.0f;
+}
+
+bool Character::IsHpFull()
+{
+	if (_maxHP == _hp)
+		return true;
+	return false;
+}
+
+bool Character::IsRecoveryCoolTime()
+{
+	if (_recoveryCooltime <= _recoveryCooltimeDuration)
+		return true;
+	return false;
+}
+
+void Character::RecoveryHP(int hp)
+{
+	_hp += hp;
+
+	if (_maxHP < _hp)
+		_hp = _maxHP;
+}
+
+void Character::ResetRecoveryCooltime()
+{
+	_recoveryCooltimeDuration = 0.0f;
 }
 
 void Character::UpdateText()
@@ -407,4 +452,10 @@ void Character::UpdateText()
 		wsprintf(text, L"DIED");
 		_font->SetText(text);
 	}
+}
+
+void Character::SetTargetTileCell(TileCell* tileCell)
+{
+	_targetTileCell = tileCell;
+	_state->NextState(eStateType::ET_PATHFINDING);
 }

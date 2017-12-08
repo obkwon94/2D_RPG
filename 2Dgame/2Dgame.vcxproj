@@ -24,6 +24,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ComponentSystem.cpp" />
     <ClCompile Include="DeadState.cpp" />
+    <ClCompile Include="DefaultStageLoader.cpp" />
     <ClCompile Include="DefenceState.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="Frame.cpp" />
@@ -32,8 +33,12 @@
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="LifeNPC.cpp" />
     <ClCompile Include="LifePlayer.cpp" />
+    <ClCompile Include="LifeStageLoader.cpp" />
+    <ClCompile Include="PathfinderMonster.cpp" />
     <ClCompile Include="PathfinderPlayer.cpp" />
     <ClCompile Include="PathfinderStageLoader.cpp" />
+    <ClCompile Include="PathfindingState.cpp" />
+    <ClCompile Include="RecoveryState.cpp" />
     <ClCompile Include="StageLoader.cpp" />
     <ClCompile Include="LifeTileObject.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -58,6 +63,7 @@
     <ClInclude Include="ComponentMessage.h" />
     <ClInclude Include="ComponentSystem.h" />
     <ClInclude Include="DeadState.h" />
+    <ClInclude Include="DefaultStageLoader.h" />
     <ClInclude Include="DefenceState.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="Frame.h" />
@@ -66,8 +72,12 @@
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="LifeNPC.h" />
     <ClInclude Include="LifePlayer.h" />
+    <ClInclude Include="LifeStageLoader.h" />
+    <ClInclude Include="PathfinderMonster.h" />
     <ClInclude Include="PathfinderPlayer.h" />
     <ClInclude Include="PathfinderStageLoader.h" />
+    <ClInclude Include="PathfindingState.h" />
+    <ClInclude Include="RecoveryState.h" />
     <ClInclude Include="StageLoader.h" />
     <ClInclude Include="LifeTileObject.h" />
     <ClInclude Include="Map.h" />

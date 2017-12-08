@@ -1,6 +1,8 @@
 #include "ComponentSystem.h"
 #include "Map.h"
 #include "StageLoader.h"
+#include "LifeStageLoader.h"
+#include "DefaultStageLoader.h"
 #include "Monster.h"
 #include "NPC.h"
 #include "LifeNPC.h"
@@ -98,8 +100,8 @@ void Stage::Init(std::wstring mapName)
 		_stageLoader[L"default"] = loader;
 	}
 
-	std::map<std::wstring, StageParts*>::iterator it = _stageLoader.find(mapName);
-	if (it != _stageLoader.end()
+	std::map<std::wstring, StageLoader*>::iterator it = _stageLoader.find(mapName);
+	if (it != _stageLoader.end())
 		_stageLoader[mapName]->CreateComponents();
 	else
 		_stageLoader[L"default"]->CreateComponents();
@@ -156,6 +158,7 @@ Map* Stage::GetMap()
 void Stage::CreateLifeNPC(Component* component)
 {
 	component->GetTileX();
+	component->GetTileY();
 	_createBaseComponentList.push_back(component);
 }
 
@@ -178,10 +181,11 @@ void Stage::UpdateBaseComponentList()
 	{
 		Component* baseComponent = (*it);
 
-		LifeNPC* npc = (LifeNPC*)_lifeStageLoader->CreateLifeNPC(L"npc", L"character_sprite2");
-
+		//LifeNPC* npc = (LifeNPC*)_lifeStageLoader->CreateLifeNPC(L"npc", L"character_sprite2");
+		LifeNPC* npc = (LifeNPC*)(_stageLoader[_map->GetName()]->CreateLifeNPC(L"npc", L"character_sprite2");
 		//npc->Init();
-		npc->InitTilePosition(baseComponent->GetTileX(), baseComponent->GetTileY());
+		//npc->InitTilePosition(baseComponent->GetTileX(), baseComponent->GetTileY());
+		npc->Init(baseComponent->GetTileX(), baseComponent->GetTileY());
 	}
 	_createBaseComponentList.clear();
 }

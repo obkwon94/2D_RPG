@@ -9,6 +9,7 @@
 class Sprite;
 class State;
 class Font;
+class TileCell;
 
 enum eStateType
 {
@@ -16,7 +17,9 @@ enum eStateType
 	ET_MOVE,
 	ET_ATTACK,
 	ET_DEFENCE,
+	ET_RECOVERY,
 	ET_DEAD,
+	ET_PATHFINDING,
 	ET_NONE
 };
 
@@ -80,6 +83,7 @@ protected:
 	eDirection _currentDirection;
 public:
 	void InitMove();
+	void InitStage();
 	void MoveStart(int newTileX, int newTileY);
 	void MoveStop();
 	//void UpadateMove(float deltaTime);
@@ -139,10 +143,29 @@ protected:
 public:
 	int GetDamage() { return _damage; }
 
+	//Recovery
+protected:
+	int _maxHP;
+	int _recovery;
+
+	float _recoveryCooltimeDuration;
+	float _recoveryCooltime;
+
+public:
+	bool IsHpFull();
+
 	//UI
 protected:
 	Font* _font;
 
 public:
 	void UpdateText();
+
+	//Pathfinding
+protected:
+	TileCell* _targetTileCell;
+
+public:
+	TileCell* GetTargetTileCell() { return _targetTileCell; }
+	void SetTargetTileCell(TileCell* tileCell);
 };

@@ -1,6 +1,7 @@
 #include "Stage.h"
 #include "Map.h"
 #include "PathfinderPlayer.h"
+#include "PathfinderMonster.h"
 #include "PathfinderStageLoader.h"
 
 PathfinderStageLoader::PathfinderStageLoader(Stage* stage)
@@ -15,9 +16,11 @@ PathfinderStageLoader::~PathfinderStageLoader()
 
 void PathfinderStageLoader::CreateComponents(std::wstring mapName)
 {
-	StageParts::CreateComponents(mapName);
+	StageLoader::CreateComponents(mapName)
 
 	//1개의 몬스터 생성
+	Component* monster = new PathfinderMonster(L"pathfinderMonster", L"monster", L"monster");
+	_stage->AddStageComponent(monster);
 
 	//1개의 플레이어 생성 (추후 길찾기 전용 플레이어로 전환)
 	Player* player = new PathfinderPlayer(L"player", L"player", L"player");

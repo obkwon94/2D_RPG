@@ -13,6 +13,7 @@ RecoveryItem::RecoveryItem(std::wstring name, std::wstring scriptFilename, std::
 	_type = eComponentType::CT_ITEM;
 	_scriptFilename = scriptFilename;
 	_textureFilename = textureFilename;
+	_canMove = true;
 }
 
 RecoveryItem::~RecoveryItem()
@@ -51,8 +52,6 @@ void RecoveryItem::Init()
 		_sprite = new Sprite(textureFilename, scriptFilename);
 		_sprite->Init();
 	}
-
-	_canMove = true;
 }
 
 void RecoveryItem::DeInit()

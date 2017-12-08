@@ -27,10 +27,8 @@ protected:
 	float _moveDistancePerTimeY;
 
 public:
-	Component() 
-	{
-		_canMove = false;
-	}
+	Component();
+
 
 	Component(std::wstring name);
 	virtual ~Component();

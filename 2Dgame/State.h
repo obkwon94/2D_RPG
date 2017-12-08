@@ -14,6 +14,7 @@ protected:
 	Character* _character;
 	std::vector<Sprite*> _spriteList;
 	eStateType _nextState;
+	eStateType _curState;
 
 public:
 	virtual void Init(Character* character);

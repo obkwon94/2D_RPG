@@ -93,7 +93,7 @@ void Map::Init()
 					for (int x = 0; x < _width; x++)
 					{
 						int index = atoi(token);
-						TileCell* tileCell = new TileCell();
+						TileCell* tileCell = new TileCell(x, row);
 						WCHAR componentName[256];
 						wsprintf(componentName, L"MapData_1_%d_%d", line, x);
 						TileObject* tileObject = new TileObject(componentName, _spriteList[index], x, row);
@@ -378,3 +378,7 @@ void Map::InitViewer(Component* viewer)
 	}
 }
 
+TileCell* Map::GetTileCell(int tileX, int tileY)
+{
+	return _tileMap[tileY][tileX];
+}

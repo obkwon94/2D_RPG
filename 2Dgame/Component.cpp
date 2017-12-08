@@ -1,6 +1,16 @@
 #include "ComponentSystem.h"
 #include "Component.h"
+Component::Component()
+{
+	_canMove = false;
 
+	_moveDistancePerTimeX = 0.0f;
+	_moveDistancePerTimeY = 0.0f;
+
+	_type = eComponentType::CT_NONE;
+
+	_isLive = true;
+}
 Component::Component(std::wstring name)
 {
 	_type = eComponentType::CT_NONE;

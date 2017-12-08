@@ -1,8 +1,8 @@
 #pragma once
 
-#include "StageParts.h"
+#include "StageLoader.h"
 
-class PathfinderStageLoader : public StageParts
+class PathfinderStageLoader : public StageLoader
 {
 public:
 	PathfinderStageLoader(Stage* stage);
