@@ -3,6 +3,7 @@
 #include <queue>
 #include "State.h"
 
+class TileCell;
 class Character;
 
 class PathfindingState : public State

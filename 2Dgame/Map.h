@@ -1,7 +1,8 @@
 #pragma once
 #include <windows.h>
 #include <vector>
-#include "TileCell.h"
+#include <list>
+#include "GlobalType.h"
 #include "Component.h"
 
 class Sprite;
@@ -48,9 +49,11 @@ public:
 	std::list<Component*> GetTileComponentList(int tileX, int tileY);
 
 	bool CanMoveTileMap(int tileX, int tileY);
+	bool CanMoveTileMap(TilePosition nextTilePos);
 	bool GetTileCollisionList(int tileX, int tileY, std::list<Component*>& collisionList);
 	
 	void InitViewer(Component* viewer);
 
 	TileCell* GetTileCell(int tileX, int tileY);
+	TileCell* GetTileCell(TilePosition nextTilePos);
 };

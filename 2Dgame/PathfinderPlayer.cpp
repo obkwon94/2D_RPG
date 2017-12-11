@@ -1,7 +1,9 @@
 #include "IdleState.h"
+#include "PathfindingState.h"
 #include "PathfinderPlayer.h"
 
-PathfinderPlayer::PathfinderPlayer()
+PathfinderPlayer::PathfinderPlayer(std::wstring name, std::wstring scriptName, std::wstring textureFileName) :
+	Player(name, scriptName, textureFileName)
 {
 
 }

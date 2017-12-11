@@ -4,6 +4,7 @@
 #include "TileObject.h"
 #include "LifeTileObject.h"
 #include "Sprite.h"
+#include "TileCell.h"
 #include "Map.h"
 
 
@@ -333,6 +334,11 @@ bool Map::CanMoveTileMap(int tileX, int tileY)
 	return _tileMap[tileY][tileX]->CanMove();
 }
 
+bool Map::CanMoveTileMap(TilePosition nextTilePos)
+{
+	return CanMoveTileMap(nextTilePos.x, nextTilePos.y);
+}
+
 bool Map::GetTileCollisionList(int tileX, int tileY, std::list<Component*>& collisionList)
 {
 	if (tileX < 0)
@@ -381,4 +387,9 @@ void Map::InitViewer(Component* viewer)
 TileCell* Map::GetTileCell(int tileX, int tileY)
 {
 	return _tileMap[tileY][tileX];
+}
+
+TileCell* Map::GetTileCell(TilePosition nextTilePos)
+{
+	return GetTileCell(nextTilePos.x, nextTilePos.y);
 }

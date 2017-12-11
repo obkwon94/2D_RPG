@@ -13,20 +13,13 @@
 
 Stage::Stage()
 {
-	//_lifeStageLoader = NULL;
 	_stageLoader.clear();
 }
 
 Stage::~Stage()
 {
 	ComponentSystem::GetInstance()->RemoveAllComponents();
-	/*
-	if (NULL != _lifeStageLoader)
-	{
-		delete _lifeStageLoader;
-		_lifeStageLoader = NULL;
-	}
-	*/
+
 	for (std::map<std::wstring, StageLoader*>::iterator it = _stageLoader.begin(); it != _stageLoader.end(); it++)
 	{
 		StageLoader* loader = it->second;
@@ -45,52 +38,7 @@ void Stage::Init(std::wstring mapName)
 
 
 	Player* player = NULL;
-	/*
-	if (L"Mapdata03" == mapName)
-	{
-		_lifeStageLoader = new LifeStageLoader(this);
-
-		_lifeStageLoader->CreateComponents(70);
-	}
-
-	if (L"Mapdata04" == mapName)
-	{
-		_lifeStageLoader = new LifeStageLoader(this);
-	}
-	else
-	{
-		for (int i = 0; i < 10; i++)
-		{
-			WCHAR name[256];
-			wsprintf(name, L"recovery_item_%d", i);
-			RecoveryItem* item = new RecoveryItem(name, L"recovery_item", L"item_sprites");
-			_componentList.push_back(item);
-		}
-
-		for (int i = 0; i < 10; i++)
-		{
-			WCHAR name[256];
-			wsprintf(name, L"npc_%d", i);
-			NPC* npc = new NPC(name, L"npc", L"character_sprite2");
-			_componentList.push_back(npc);
-		}
-
-		for (int i = 0; i < 10; i++)
-		{
-			WCHAR name[256];
-			wsprintf(name, L"monster_%d", i);
-			Monster* monster = new Monster(name, L"monster", L"monster");
-			_componentList.push_back(monster);
-		}
-
-		NPC* npc = new NPC(L"npc", L"npc", L"character_sprite2");
-		_componentList.push_back(npc);
-
-		player = new Player(L"player", L"player", L"player");
-	}
-	*/
-	//_componentList.push_back(player);
-
+	
 	{
 		StageLoader* loader = new LifeStageLoader(this);
 		_stageLoader[L"Mapdata03"] = loader;
@@ -102,17 +50,14 @@ void Stage::Init(std::wstring mapName)
 
 	std::map<std::wstring, StageLoader*>::iterator it = _stageLoader.find(mapName);
 	if (it != _stageLoader.end())
-		_stageLoader[mapName]->CreateComponents();
+		_stageLoader[mapName]->CreateComponents(mapName);
 	else
-		_stageLoader[L"default"]->CreateComponents();
-	/*
+		_stageLoader[L"default"]->CreateComponents(mapName);
+
 	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
 	{
 		(*it)->Init();
 	}
-	*/
-	//_map->InitViewer(player);
-
 }
 
 void Stage::Update(float deltaTime)
@@ -150,11 +95,6 @@ void Stage::Reset()
 	}
 }
 
-Map* Stage::GetMap()
-{
-	return _map;
-}
-
 void Stage::CreateLifeNPC(Component* component)
 {
 	component->GetTileX();
@@ -181,10 +121,8 @@ void Stage::UpdateBaseComponentList()
 	{
 		Component* baseComponent = (*it);
 
-		//LifeNPC* npc = (LifeNPC*)_lifeStageLoader->CreateLifeNPC(L"npc", L"character_sprite2");
-		LifeNPC* npc = (LifeNPC*)(_stageLoader[_map->GetName()]->CreateLifeNPC(L"npc", L"character_sprite2");
-		//npc->Init();
-		//npc->InitTilePosition(baseComponent->GetTileX(), baseComponent->GetTileY());
+		LifeNPC* npc = (LifeNPC*)(_stageLoader[_map->GetName()]->CreateLifeNPC(L"npc", L"character_sprite2"));
+
 		npc->Init(baseComponent->GetTileX(), baseComponent->GetTileY());
 	}
 	_createBaseComponentList.clear();

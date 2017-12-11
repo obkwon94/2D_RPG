@@ -4,12 +4,13 @@
 #include <list>
 #include <string>
 #include <map>
+#include "GlobalType.h"
 #include "Component.h"
 
 class Sprite;
-class State;
 class Font;
 class TileCell;
+class State;
 
 enum eStateType
 {
@@ -21,15 +22,6 @@ enum eStateType
 	ET_DEAD,
 	ET_PATHFINDING,
 	ET_NONE
-};
-
-enum eDirection
-{
-	LEFT,
-	RIGHT,
-	UP,
-	DOWN,
-	NONE
 };
 
 class Character : public Component
@@ -86,7 +78,6 @@ public:
 	void InitStage();
 	void MoveStart(int newTileX, int newTileY);
 	void MoveStop();
-	//void UpadateMove(float deltaTime);
 	void Moving(float deltaTime);
 
 	bool IsMoving() { return _isMoving; }
@@ -153,6 +144,9 @@ protected:
 
 public:
 	bool IsHpFull();
+	bool IsRecoveryCoolTime();
+	void RecoveryHP(int hp);
+	void ResetRecoveryCooltime();
 
 	//UI
 protected:

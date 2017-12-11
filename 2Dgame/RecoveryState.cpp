@@ -39,8 +39,7 @@ void RecoveryState::Release()
 
 void RecoveryState::Reset()
 {
-	State::Res
-	();
+	State::Reset();
 }
 
 void RecoveryState::Start()
@@ -48,7 +47,7 @@ void RecoveryState::Start()
 	State::Start();
 	_curState = eStateType::ET_RECOVERY;
 
-	_character->RecoveryHP();
+	_character->RecoveryHP(50);
 	_character->ResetRecoveryCooltime();
 
 	_nextState = eStateType::ET_IDLE;

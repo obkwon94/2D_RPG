@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 
+class Sprite;
 class Character;
 enum eStateType;
 

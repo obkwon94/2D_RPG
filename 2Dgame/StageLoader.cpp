@@ -1,3 +1,4 @@
+#include "Map.h"
 #include "Stage.h"
 #include "LifePlayer.h"
 #include "LifeNPC.h"
@@ -14,16 +15,11 @@ StageLoader::~StageLoader()
 
 }
 
-void StageLoader::CreateComponents()
+void StageLoader::CreateComponents(std::wstring mapName)
 {
-	/*
-	for (int i = 0; i< count; i++)
-	{
-		Component* component = CreateLifeNPC(L"monster", L"monster");
-	}
-	Player* player = new LifePlayer(L"player", L"player", L"player");
-	_stage->AddStageComponent(player);
-	*/
+	Map* map = new Map(mapName.c_str());
+	_stage->SetMap(map);
+	_stage->AddStageComponent(map);
 }
 
 Component* StageLoader::CreateLifeNPC(std::wstring scriptName, std::wstring textureFileName)

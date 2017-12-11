@@ -21,7 +21,7 @@ public:
 	Component* CreateLifeNPC(LPCWSTR scriptName, LPCWSTR textureFileName);
 	void SetName(LPCWSTR name);
 	*/
-	virtual void CreateComponents();
+	virtual void CreateComponents(std::wstring mapName);
 	virtual Component* CreateLifeNPC(std::wstring scriptName, std::wstring textureFileName);
 	virtual void SetName(std::wstring name, int id);
 };

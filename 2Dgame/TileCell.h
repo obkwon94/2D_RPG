@@ -52,4 +52,7 @@ public:
 	void InitPathfinding();
 	bool IsPathfindingMark() { return _isPathfindingMark; }
 	void PathFinded() { _isPathfindingMark = true; }
+
+	TileCell* GetPrevPathfindingCell() { return _prevPathfindingCell; }
+	void SetPrevPathfindingCell(TileCell* tileCell) { _prevPathfindingCell = tileCell; }
 };

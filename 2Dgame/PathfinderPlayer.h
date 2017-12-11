@@ -5,7 +5,7 @@
 class PathfinderPlayer : public Player
 {
 public:
-	PathfinderPlayer();
+	PathfinderPlayer(std::wstring name, std::wstring scriptName, std::wstring textureFileName);
 	~PathfinderPlayer();
 
 	//AI

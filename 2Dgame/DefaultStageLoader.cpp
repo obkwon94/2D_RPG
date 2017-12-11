@@ -4,7 +4,6 @@
 #include "NPC.h"
 #include "Monster.h"
 #include "RecoveryItem.h"
-
 #include "DefaultStageLoader.h"
 
 DefaultStageLoader::DefaultStageLoader(Stage* stage) :
@@ -26,7 +25,7 @@ void DefaultStageLoader::createComponents()
 		WCHAR name[256];
 		wsprintf(name, L"recovery_item_%d", i);
 		RecoveryItem* item = new RecoveryItem(name, L"recovery_item", L"item_sprites");
-		_stage.AddStageComponent(item);
+		_stage->AddStageComponent(item);
 	}
 
 	for (int i = 0; i < 10; i++)
@@ -34,7 +33,7 @@ void DefaultStageLoader::createComponents()
 		WCHAR name[256];
 		wsprintf(name, L"npc_%d", i);
 		NPC* npc = new NPC(name, L"npc", L"character_sprite2");
-		_stage.AddStageComponent(npc);
+		_stage->AddStageComponent(npc);
 	}
 
 	for (int i = 0; i < 10; i++)
@@ -42,7 +41,7 @@ void DefaultStageLoader::createComponents()
 		WCHAR name[256];
 		wsprintf(name, L"monster_%d", i);
 		Monster* monster = new Monster(name, L"monster", L"monster");
-		_stage.AddStageComponent(monster);
+		_stage->AddStageComponent(monster);
 	}
 
 	Player* player = new Player(L"player", L"player", L"player");

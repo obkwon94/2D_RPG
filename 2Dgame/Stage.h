@@ -1,10 +1,11 @@
 #pragma once
+#include <string>
+#include <map>
 #include <list>
 
 class Component;
 class Map;
-//class NPC;
-class LifeStageLoader;
+class StageLoader;
 
 class Stage
 {
@@ -21,10 +22,11 @@ public:
 private:
 	std::list<Component*> _componentList;
 	Map* _map;
-	//LifeStageLoader* _lifeStageLoader;
 
 public:
 	Map* GetMap() { return _map; }
+	void SetMap(Map* map) {	_map = map;	}
+
 
 	//LifeGame
 private:
@@ -38,8 +40,6 @@ public:
 	void UpdateBaseComponentList();
 	void UpdateRemoveComponentList();
 	
-
-
 	//Part
 private:
 	std::map<std::wstring, StageLoader*> _stageLoader;
