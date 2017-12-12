@@ -1,8 +1,10 @@
 #include "ComponentSystem.h"
+#include "TileCell.h"
 #include "Map.h"
 #include "StageLoader.h"
 #include "LifeStageLoader.h"
 #include "DefaultStageLoader.h"
+#include "PathfinderStageLoader.h"
 #include "Monster.h"
 #include "NPC.h"
 #include "LifeNPC.h"
@@ -34,18 +36,23 @@ void Stage::Init(std::wstring mapName)
 	_componentList.clear();
 
 	_map = new Map(mapName.c_str());
-	_componentList.push_back(_map);
+	AddStageComponent(_map);
+	//_componentList.push_back(_map);
 
 
-	Player* player = NULL;
+	//Player* player = NULL;
 	
 	{
-		StageLoader* loader = new LifeStageLoader(this);
-		_stageLoader[L"Mapdata03"] = loader;
+		_loader = new PathfinderStageLoader(this);
+		_stageLoader[L"MapData04"] = _loader;
 	}
 	{
-		StageLoader* loader = new DefaultStageLoader(this);
-		_stageLoader[L"default"] = loader;
+		_loader = new LifeStageLoader(this);
+		_stageLoader[L"Mapdata03"] = _loader;
+	}
+	{
+		_loader = new DefaultStageLoader(this);
+		_stageLoader[L"default"] = _loader;
 	}
 
 	std::map<std::wstring, StageLoader*>::iterator it = _stageLoader.find(mapName);
@@ -54,10 +61,12 @@ void Stage::Init(std::wstring mapName)
 	else
 		_stageLoader[L"default"]->CreateComponents(mapName);
 
+	/*
 	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
 	{
 		(*it)->Init();
 	}
+	*/
 }
 
 void Stage::Update(float deltaTime)
@@ -92,6 +101,30 @@ void Stage::Reset()
 	for (std::list<Component*>::iterator it = _componentList.begin(); it != _componentList.end(); it++)
 	{
 		(*it)->Reset();
+	}
+}
+
+void Stage::CreatePathfinderNPC(TileCell* tileCell)
+{
+	LifeNPC* npc = (LifeNPC*)(_loader->CreateLifeNPC(L"npc", L"character_sprite2"));
+	npc->InitTilePosition(tileCell->GetTileX(), tileCell->GetTileY());
+	
+
+	if (tileCell->GetTileX() < tileCell->GetPrevPathfindingCell()->GetTileX())
+	{
+		npc->SetDirection(eDirection::RIGHT);
+	}
+	else if (tileCell->GetPrevPathfindingCell()->GetTileX() < tileCell->GetTileX())
+	{
+		npc->SetDirection(eDirection::LEFT);
+	}
+	else if (tileCell->GetTileY() < tileCell->GetPrevPathfindingCell()->GetTileY())
+	{
+		npc->SetDirection(eDirection::DOWN);
+	}
+	else if (tileCell->GetPrevPathfindingCell()->GetTileY() < tileCell->GetTileY())
+	{
+		npc->SetDirection(eDirection::UP);
 	}
 }
 

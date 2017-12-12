@@ -4,6 +4,7 @@
 #include <list>
 
 class Component;
+class TileCell;
 class Map;
 class StageLoader;
 
@@ -27,6 +28,8 @@ public:
 	Map* GetMap() { return _map; }
 	void SetMap(Map* map) {	_map = map;	}
 
+	//Pathfind
+	void CreatePathfinderNPC(TileCell* tileCell);
 
 	//LifeGame
 private:
@@ -40,9 +43,10 @@ public:
 	void UpdateBaseComponentList();
 	void UpdateRemoveComponentList();
 	
-	//Part
+	//Loader
 private:
 	std::map<std::wstring, StageLoader*> _stageLoader;
+	StageLoader* _loader;
 
 public:
 	void AddStageComponent(Component* component);

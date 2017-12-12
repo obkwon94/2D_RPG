@@ -1,7 +1,4 @@
-﻿  DefaultStageLoader.cpp
+﻿  Stage.cpp
 c:\kob\2d_rpg\2dgame\globaltype.h(16): warning C4091: 'typedef ': 변수를 선언하지 않으면 'TilePosition' 왼쪽은 무시됩니다.
-json_vc71_libmtd.lib(json_reader.obj) : warning LNK4099: 'lib_json.pdb' PDB를 'json_vc71_libmtd.lib(json_reader.obj)' 또는 'C:\kob\2D_RPG\Debug\lib_json.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-json_vc71_libmtd.lib(json_value.obj) : warning LNK4099: 'lib_json.pdb' PDB를 'json_vc71_libmtd.lib(json_value.obj)' 또는 'C:\kob\2D_RPG\Debug\lib_json.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
-json_vc71_libmtd.lib(json_writer.obj) : warning LNK4099: 'lib_json.pdb' PDB를 'json_vc71_libmtd.lib(json_writer.obj)' 또는 'C:\kob\2D_RPG\Debug\lib_json.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
   2Dgame.vcxproj -> C:\kob\2D_RPG\Debug\2Dgame.exe
   2Dgame.vcxproj -> C:\kob\2D_RPG\Debug\2Dgame.pdb (Partial PDB)

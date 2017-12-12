@@ -17,7 +17,7 @@ DefaultStageLoader::~DefaultStageLoader()
 
 }
 
-void DefaultStageLoader::createComponents()
+void DefaultStageLoader::CreateComponents(std::wstring mapName)
 {
 
 	for (int i = 0; i < 10; i++)
@@ -46,5 +46,6 @@ void DefaultStageLoader::createComponents()
 
 	Player* player = new Player(L"player", L"player", L"player");
 	_stage->AddStageComponent(player);
+
 	_stage->GetMap()->InitViewer(player);
 }

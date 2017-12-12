@@ -83,6 +83,7 @@ public:
 	bool IsMoving() { return _isMoving; }
 	float GetMoveTime() { return _moveTime; }
 
+	void SetDirection(eDirection direction) { _currentDirection = direction; }
 	eDirection GetDirection() { return _currentDirection; }
 	virtual Component* Collision(std::list<Component*>& collisionList);
 

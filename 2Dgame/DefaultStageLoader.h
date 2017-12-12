@@ -9,5 +9,5 @@ public:
 	~DefaultStageLoader();
 
 public:
-	void createComponents();
+	void CreateComponents(std::wstring mapName);
 };

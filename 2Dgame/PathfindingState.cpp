@@ -51,6 +51,31 @@ void PathfindingState::Update(float deltaTime)
 			if (tileCell->GetTileX() == _targetTileCell->GetTileX() &&
 				tileCell->GetTileY() == _targetTileCell->GetTileY())
 			{
+				std::list<Component*> comList = tileCell->GetComponentList();
+				for (std::list<Component*>::iterator it = comList.begin(); it != comList.end(); it++)
+				{
+					if (eComponentType::CT_MONSTER == (*it)->GetType())
+					{
+						Character* monster = (Character*)(*it);
+
+						if (tileCell->GetTileX() < tileCell->GetPrevPathfindingCell()->GetTileX())
+						{
+							monster->SetDirection(eDirection::RIGHT);
+						}
+						else if (tileCell->GetPrevPathfindingCell()->GetTileX() < tileCell->GetTileX())
+						{
+							monster->SetDirection(eDirection::LEFT);
+						}
+						else if (tileCell->GetTileY() < tileCell->GetPrevPathfindingCell()->GetTileY())
+						{
+							monster->SetDirection(eDirection::DOWN);
+						}
+						else if (tileCell->GetPrevPathfindingCell()->GetTileY() < tileCell->GetTileY())
+						{
+							monster->SetDirection(eDirection::UP);
+						}
+					}
+				}
 				OutputDebugString(L"Find Goal\n");
 				_nextState = eStateType::ET_IDLE;
 				return;
@@ -75,6 +100,15 @@ void PathfindingState::Update(float deltaTime)
 					{
 						nextTileCell->SetPrevPathfindingCell(tileCell);
 						_pathfindingTileQueue.push(nextTileCell);
+
+						if (//몬스터, 플레이어는 제외
+								!(nextTileCell->GetTileX() == _targetTileCell->GetTileX() && nextTileCell->GetTileY() == _targetTileCell->GetTileY()) &&
+								!(nextTileCell->GetTileX() == _character->GetTileX() && nextTileCell->GetTileY() == _character->GetTileY())
+						   )
+						{
+							//움직이지 않는 npc 생성, 해당 타일셀에 위치
+							//방향은 이전 방향을 바라보고 있게 한다
+						}
 					}
 				}
 			}
@@ -108,4 +142,10 @@ void PathfindingState::Start()
 void PathfindingState::Stop()
 {
 	State::Stop();
+
+	while (0 != _pathfindingTileQueue.size())
+	{
+		_pathfindingTileQueue.pop();
+	}
+	
 }

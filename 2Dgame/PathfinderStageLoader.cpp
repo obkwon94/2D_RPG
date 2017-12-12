@@ -17,7 +17,7 @@ PathfinderStageLoader::~PathfinderStageLoader()
 
 void PathfinderStageLoader::CreateComponents(std::wstring mapName)
 {
-	StageLoader::CreateComponents(mapName);
+	//StageLoader::CreateComponents(mapName);
 
 	//1개의 몬스터 생성
 	Component* monster = new PathfinderMonster(L"pathfinderMonster", L"monster", L"monster");
