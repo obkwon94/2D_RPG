@@ -150,6 +150,7 @@
     <ClCompile Include="PathfinderMonster.cpp" />
     <ClCompile Include="PathfinderPlayer.cpp" />
     <ClCompile Include="PathfinderStageLoader.cpp" />
+    <ClCompile Include="PathfindingMoveState.cpp" />
     <ClCompile Include="PathfindingState.cpp" />
     <ClCompile Include="StageLoader.cpp" />
     <ClCompile Include="Character.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="PathfinderMonster.h" />
     <ClInclude Include="PathfinderPlayer.h" />
     <ClInclude Include="PathfinderStageLoader.h" />
+    <ClInclude Include="PathfindingMoveState.h" />
     <ClInclude Include="PathfindingState.h" />
     <ClInclude Include="StageLoader.h" />
     <ClInclude Include="Character.h" />

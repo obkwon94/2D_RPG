@@ -20,7 +20,21 @@ public:
 	void Stop();
 
 	// Pathfinding
+public:
+	enum eUpdateState
+	{
+		PATHFINDING,
+		BUILD_PATH
+	};
+
 private:
 	std::queue<TileCell*> _pathfindingTileQueue;
 	TileCell* _targetTileCell;
+	eUpdateState _updateState;
+
+	TileCell* _reverseTileCell;
+
+public:
+	void UpdatePathfinding();
+	void UpdateBuildPath();
 };

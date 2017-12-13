@@ -31,6 +31,55 @@ void PathfindingState::Update(float deltaTime)
 		return;
 	}
 
+	switch (_updateState)
+	{
+	case eUpdateState::PATHFINDING:
+		UpdatePathfinding();
+		break;
+	case eUpdateState::BUILD_PATH:
+		UpdateBuildPath();
+	}
+}
+
+void PathfindingState::Start()
+{
+	State::Start();
+
+	_targetTileCell = _character->GetTargetTileCell();
+
+	// 모든타일셀의 길찾기 속성 초기화
+	Map* map = GameSystem::GetInstance().GetStage()->GetMap();
+	int height = map->GetHeight();
+	int width = map->GetWidth();
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			TileCell* tileCell = map->GetTileCell(x, y);
+			tileCell->InitPathfinding();
+		}
+	}
+
+	TileCell* startTileCell = map->GetTileCell(
+		_character->GetTileX(), _character->GetTileY()
+	);
+	_pathfindingTileQueue.push(startTileCell);
+
+	_updateState = eUpdateState::PATHFINDING;
+}
+
+void PathfindingState::Stop()
+{
+	State::Stop();
+
+	while (0 != _pathfindingTileQueue.size())
+	{
+		_pathfindingTileQueue.pop();
+	}
+}
+
+void PathfindingState::UpdatePathfinding()
+{
 	// 길찾기 알고리즘 시작
 	if (0 != _pathfindingTileQueue.size())
 	{
@@ -45,7 +94,7 @@ void PathfindingState::Update(float deltaTime)
 			swprintf(msg, L"current tile %d, %d / %d, %d\n",
 				tileCell->GetTileX(), tileCell->GetTileY(), _targetTileCell->GetTileX(), _targetTileCell->GetTileY());
 			OutputDebugString(msg);
-			
+
 			// 목표 타일이면 종료
 			if (tileCell->GetTileX() == _targetTileCell->GetTileX() &&
 				tileCell->GetTileY() == _targetTileCell->GetTileY())
@@ -77,7 +126,8 @@ void PathfindingState::Update(float deltaTime)
 				}
 
 				OutputDebugString(L"Find Goal\n");
-				_nextState = eStateType::ET_IDLE;
+				_updateState = eUpdateState::BUILD_PATH;
+				_reverseTileCell = _targetTileCell;
 				return;
 			}
 
@@ -100,13 +150,12 @@ void PathfindingState::Update(float deltaTime)
 						nextTileCell->SetPrevPathfindingCell(tileCell);
 						_pathfindingTileQueue.push(nextTileCell);
 
-						/*
-						몬스터, 플레이어는 제외
-						{
-							움직이지 않는 npc 생성. 해당 타일셀에다가 위치시킨다
-							방향은 이전 방향을 바라보고 있게
-						}
-						*/
+
+						//몬스터, 플레이어는 제외
+						//	{
+						//		움직이지 않는 npc 생성. 해당 타일셀에다가 위치시킨다
+						//		방향은 이전 방향을 바라보고 있게
+						//	}
 
 						if (
 							!(nextTileCell->GetTileX() == _targetTileCell->GetTileX() && nextTileCell->GetTileY() == _targetTileCell->GetTileY())
@@ -123,37 +172,22 @@ void PathfindingState::Update(float deltaTime)
 	}
 }
 
-void PathfindingState::Start()
+void PathfindingState::UpdateBuildPath()
 {
-	State::Start();
-
-	_targetTileCell = _character->GetTargetTileCell();
-
-	// 모든타일셀의 길찾기 속성 초기화
-	Map* map = GameSystem::GetInstance().GetStage()->GetMap();
-	int height = map->GetHeight();
-	int width = map->GetWidth();
-	for (int y = 0; y < height; y++)
+	//거꾸로돌아가면서 길을 도출한다.
+	if (NULL != _reverseTileCell)
 	{
-		for (int x = 0; x < width; x++)
+		if (_reverseTileCell->GetTileX() != _targetTileCell->GetTileX() ||
+			_reverseTileCell->GetTileY() != _targetTileCell->GetTileY())
 		{
-			TileCell* tileCell = map->GetTileCell(x, y);
-			tileCell->InitPathfinding();
+			GameSystem::GetInstance().GetStage()->CreatePathfindingMark(_reverseTileCell);
+			_character->PushPathTileCell(_reverseTileCell);
 		}
+		_reverseTileCell = _reverseTileCell->GetPrevPathfindingCell();
+		
 	}
-
-	TileCell* startTileCell = map->GetTileCell(
-		_character->GetTileX(), _character->GetTileY()
-	);
-	_pathfindingTileQueue.push(startTileCell);
-}
-
-void PathfindingState::Stop()
-{
-	State::Stop();
-
-	while (0 != _pathfindingTileQueue.size())
+	else
 	{
-		_pathfindingTileQueue.pop();
+		_nextState = eStateType::ET_MOVE;
 	}
 }

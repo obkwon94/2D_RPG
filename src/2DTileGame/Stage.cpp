@@ -108,6 +108,9 @@ void Stage::CreatePathfinderNPC(TileCell* tileCell)
 	LifeNPC* npc = (LifeNPC*)(_loader->CreateLifeNPC(L"npc", L"char_sprite_01"));
 	npc->InitTilePosition(tileCell->GetTileX(), tileCell->GetTileY());
 
+	_componentList.remove(npc);
+	tileCell->AddComponent(npc, true);
+
 	if (tileCell->GetTileX() < tileCell->GetPrevPathfindingCell()->GetTileX())
 	{
 		npc->SetDirection(eDirection::RIGHT);
@@ -124,6 +127,36 @@ void Stage::CreatePathfinderNPC(TileCell* tileCell)
 	{
 		npc->SetDirection(eDirection::UP);
 	}
+}
+
+void Stage::CreatePathfindingMark(TileCell* tileCell)
+{
+	LifeNPC* npc = (LifeNPC*)(_loader->CreateLifeNPC(L"monster", L"char_sprite_02"));
+	npc->InitTilePosition(tileCell->GetTileX(), tileCell->GetTileY());
+
+	_componentList.remove(npc);
+	tileCell->AddComponent(npc, true);
+
+	if (NULL != tileCell->GetPrevPathfindingCell())
+	{
+		if (tileCell->GetTileX() < tileCell->GetPrevPathfindingCell()->GetTileX())
+		{
+			npc->SetDirection(eDirection::LEFT);
+		}
+		else if (tileCell->GetPrevPathfindingCell()->GetTileX() < tileCell->GetTileX())
+		{
+			npc->SetDirection(eDirection::RIGHT);
+		}
+		else  if (tileCell->GetTileY() < tileCell->GetPrevPathfindingCell()->GetTileY())
+		{
+			npc->SetDirection(eDirection::UP);
+		}
+		else  if (tileCell->GetPrevPathfindingCell()->GetTileY() < tileCell->GetTileY())
+		{
+			npc->SetDirection(eDirection::DOWN);
+		}
+	}
+	
 }
 
 void Stage::CreateLifeNPC(Component* component)

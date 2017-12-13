@@ -49,6 +49,7 @@ private:
 
 public:
 	void CreatePathfinderNPC(TileCell* tileCell);
+	void CreatePathfindingMark(TileCell* tileCell);
 
 	void CreateLifeNPC(Component* component);
 	void DestroyLifeNPC(int tileX, int tileY, Component* tileCharacter);

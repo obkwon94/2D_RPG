@@ -43,7 +43,7 @@ Component* StageLoader::CreateLifeNPC(LPCWSTR scriptName, LPCWSTR textureFilenam
 	wsprintf(name, L"lifenpc_%d", _lifeNpcCount);
 	_lifeNpcCount++;
 
-	Component* npc = new LifeNPC(name, L"npc", L"char_sprite_01");
+	Component* npc = new LifeNPC(name, scriptName, textureFilename);
 	_stage->AddStageComponent(npc);
 
 	return npc;

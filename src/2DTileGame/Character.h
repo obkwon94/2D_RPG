@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Windows.h>
+#include <stack>
 #include <map>
 #include <vector>
 #include <string>
@@ -155,8 +156,11 @@ public:
 	// Pathfinding
 protected:
 	TileCell* _targetTileCell;
+	std::stack<TileCell*> _pathTileCellStack;
 
 public:
 	TileCell* GetTargetTileCell() { return _targetTileCell; }
 	void SetTargetTileCell(TileCell* tileCell);
+	std::stack<TileCell*> GetPathTileCellStack() { return _pathTileCellStack; }
+	void PushPathTileCell(TileCell* tileCell) { _pathTileCellStack.push(tileCell); }
 };
