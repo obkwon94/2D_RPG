@@ -1,4 +1,0 @@
-﻿  Stage.cpp
-c:\kob\2d_rpg\2dgame\globaltype.h(16): warning C4091: 'typedef ': 변수를 선언하지 않으면 'TilePosition' 왼쪽은 무시됩니다.
-  2Dgame.vcxproj -> C:\kob\2D_RPG\Debug\2Dgame.exe
-  2Dgame.vcxproj -> C:\kob\2D_RPG\Debug\2Dgame.pdb (Partial PDB)
