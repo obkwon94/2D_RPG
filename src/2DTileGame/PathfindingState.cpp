@@ -84,7 +84,7 @@ void PathfindingState::UpdatePathfinding()
 	if (0 != _pathfindingTileQueue.size())
 	{
 		// 첫번 째 노드를 꺼내서 검사
-		TileCell* tileCell = _pathfindingTileQueue.front();
+		TileCell* tileCell = _pathfindingTileQueue.top();
 		_pathfindingTileQueue.pop();
 		if (false == tileCell->IsPathfindingMark())
 		{
@@ -145,8 +145,11 @@ void PathfindingState::UpdatePathfinding()
 					(nextTileCell->GetTileX() == _targetTileCell->GetTileX() && nextTileCell->GetTileY() == _targetTileCell->GetTileY())
 					)
 				{
+					float distanceFromStart = tileCell->GetDistanceFromStart() + tileCell->GetDistanceWeight();
+
 					if (NULL == nextTileCell->GetPrevPathfindingCell())
 					{
+						nextTileCell->SetDistanceFromStart(distanceFromStart);
 						nextTileCell->SetPrevPathfindingCell(tileCell);
 						_pathfindingTileQueue.push(nextTileCell);
 
@@ -164,6 +167,16 @@ void PathfindingState::UpdatePathfinding()
 							)
 						{
 							GameSystem::GetInstance().GetStage()->CreatePathfinderNPC(nextTileCell);
+						}
+					}
+					else
+					{
+						if (distanceFromStart < nextTileCell->GetDistanceFromStart())
+						{
+							//다시 검사
+							nextTileCell->SetDistanceFromStart(distanceFromStart);
+							nextTileCell->SetPrevPathfindingCell(tileCell);
+							_pathfindingTileQueue.push(nextTileCell);
 						}
 					}
 				}

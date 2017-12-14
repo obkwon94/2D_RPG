@@ -47,10 +47,17 @@ private:
 	bool _isPathfindingMark;
 	TileCell* _prevPathfindingCell;
 
+	float _distanceWeight;		//고정된 값, 맵 로딩할 때 세팅
+	float _distanceFromStart;	//계산된 값을 저장하기 위한 변수
+
 public:
 	void InitPathfinding();
 	bool IsPathfindingMark() { return _isPathfindingMark; }
 	void PathFinded() { _isPathfindingMark = true; }
+
+	float GetDistanceWeight() { return _distanceWeight; }
+	float GetDistanceFromStart() { return _distanceFromStart; }
+	void SetDistanceFromStart(float distance) { _distanceFromStart = distance; }
 
 	TileCell* GetPrevPathfindingCell() { return _prevPathfindingCell;  }
 	void SetPrevPathfindingCell(TileCell* tileCell) { _prevPathfindingCell = tileCell;  }

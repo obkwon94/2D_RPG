@@ -107,6 +107,7 @@ void Stage::CreatePathfinderNPC(TileCell* tileCell)
 {
 	LifeNPC* npc = (LifeNPC*)(_loader->CreateLifeNPC(L"npc", L"char_sprite_01"));
 	npc->InitTilePosition(tileCell->GetTileX(), tileCell->GetTileY());
+	npc->SetCanMove(true);
 
 	_componentList.remove(npc);
 	tileCell->AddComponent(npc, true);
@@ -133,6 +134,7 @@ void Stage::CreatePathfindingMark(TileCell* tileCell)
 {
 	LifeNPC* npc = (LifeNPC*)(_loader->CreateLifeNPC(L"monster", L"char_sprite_02"));
 	npc->InitTilePosition(tileCell->GetTileX(), tileCell->GetTileY());
+	npc->SetCanMove(true);
 
 	_componentList.remove(npc);
 	tileCell->AddComponent(npc, true);

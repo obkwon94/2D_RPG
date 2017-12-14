@@ -16,3 +16,5 @@ typedef struct TilePosition
 };
 
 TilePosition GetNextTilePosition(TilePosition currentTilePos, eDirection direction);
+
+eDirection GetDirection(TilePosition to, TilePosition from);
