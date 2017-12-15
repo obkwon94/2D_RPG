@@ -50,6 +50,8 @@ private:
 	float _distanceWeight;		//고정된 값, 맵 로딩할 때 세팅
 	float _distanceFromStart;	//계산된 값을 저장하기 위한 변수
 
+	float _heuristic;
+
 public:
 	void InitPathfinding();
 	bool IsPathfindingMark() { return _isPathfindingMark; }
@@ -61,4 +63,7 @@ public:
 
 	TileCell* GetPrevPathfindingCell() { return _prevPathfindingCell;  }
 	void SetPrevPathfindingCell(TileCell* tileCell) { _prevPathfindingCell = tileCell;  }
+
+	float GetHeuristic() { return _heuristic; }
+	void SetHeuristic(float heuristic) { _heuristic = heuristic; }
 };

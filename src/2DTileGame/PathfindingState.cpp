@@ -146,10 +146,13 @@ void PathfindingState::UpdatePathfinding()
 					)
 				{
 					float distanceFromStart = tileCell->GetDistanceFromStart() + tileCell->GetDistanceWeight();
+					//float heuristic = distanceFromStart;
+					float heuristic = CalcSimpleHeuristic(tileCell, nextTileCell, _targetTileCell);
 
 					if (NULL == nextTileCell->GetPrevPathfindingCell())
 					{
 						nextTileCell->SetDistanceFromStart(distanceFromStart);
+						nextTileCell->SetHeuristic(heuristic);
 						nextTileCell->SetPrevPathfindingCell(tileCell);
 						_pathfindingTileQueue.push(nextTileCell);
 
@@ -169,6 +172,7 @@ void PathfindingState::UpdatePathfinding()
 							GameSystem::GetInstance().GetStage()->CreatePathfinderNPC(nextTileCell);
 						}
 					}
+					/*
 					else
 					{
 						if (distanceFromStart < nextTileCell->GetDistanceFromStart())
@@ -179,6 +183,7 @@ void PathfindingState::UpdatePathfinding()
 							_pathfindingTileQueue.push(nextTileCell);
 						}
 					}
+					*/
 				}
 			}
 		}
@@ -203,4 +208,55 @@ void PathfindingState::UpdateBuildPath()
 	{
 		_nextState = eStateType::ET_MOVE;
 	}
+}
+
+float PathfindingState::CalcSimpleHeuristic(TileCell* tileCell, TileCell* nextTileCell, TileCell* targetTileCell)
+{
+	float heuristic = 0.0f;
+
+	int diffFromCurrent = 0;
+	int diffFromNext = 0;
+
+	//x : 발견적 값을 갱신
+	{
+		diffFromCurrent = tileCell->GetTileX() - targetTileCell->GetTileX();
+		if (diffFromCurrent < 0)
+			diffFromCurrent = -diffFromCurrent;
+
+		diffFromNext = nextTileCell->GetTileX() - targetTileCell->GetTileX();
+		if (diffFromNext < 0)
+			diffFromNext = -diffFromNext;
+
+		if (diffFromNext < diffFromCurrent)
+		{
+			heuristic -= 1.0f;
+		}
+		else if (diffFromNext > diffFromCurrent)
+		{
+			heuristic += 1.0f;
+		}
+	}
+
+	//y : 발견적 값을 누적 갱신
+	{
+		diffFromCurrent = tileCell->GetTileY() - targetTileCell->GetTileY();
+		if (diffFromCurrent < 0)
+			diffFromCurrent = -diffFromCurrent;
+
+		diffFromNext = nextTileCell->GetTileY() - targetTileCell->GetTileY();
+		if (diffFromNext < 0)
+			diffFromNext = -diffFromNext;
+
+
+		if (diffFromNext < diffFromCurrent)
+		{
+			heuristic -= 1.0f;
+		}
+		else if (diffFromNext > diffFromCurrent)
+		{
+			heuristic += 1.0f;
+		}
+	}
+
+	return heuristic;
 }

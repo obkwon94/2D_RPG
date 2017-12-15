@@ -9,6 +9,8 @@ TileObject::TileObject(LPCWSTR name, Sprite* sprite, int tileX, int tileY) : Com
 	
 	_tileX = tileX;
 	_tileY = tileY;
+
+	_distanceWeight = 1.0f;
 }
 
 TileObject::~TileObject()
