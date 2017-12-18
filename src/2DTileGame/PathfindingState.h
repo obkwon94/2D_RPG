@@ -48,5 +48,8 @@ private:
 public:
 	void UpdatePathfinding();
 	void UpdateBuildPath();
+
 	float CalcSimpleHeuristic(TileCell* tileCell, TileCell* nextTileCell, TileCell* targetTileCell);
+	float CalcComplectHeuristic(TileCell* nextTileCell, TileCell* targetTileCell);
+	float CalcAStarHeuristic(float distanceFromStart, TileCell* nextTileCell, TileCell* targetTileCell);
 };

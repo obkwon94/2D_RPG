@@ -147,7 +147,9 @@ void PathfindingState::UpdatePathfinding()
 				{
 					float distanceFromStart = tileCell->GetDistanceFromStart() + tileCell->GetDistanceWeight();
 					//float heuristic = distanceFromStart;
-					float heuristic = CalcSimpleHeuristic(tileCell, nextTileCell, _targetTileCell);
+					//float heuristic = CalcSimpleHeuristic(tileCell, nextTileCell, _targetTileCell);
+					//float heuristic = CalcComplectHeuristic(nextTileCell, _targetTileCell);
+					float heuristic = CalcAStarHeuristic(distanceFromStart, nextTileCell, _targetTileCell);
 
 					if (NULL == nextTileCell->GetPrevPathfindingCell())
 					{
@@ -259,4 +261,21 @@ float PathfindingState::CalcSimpleHeuristic(TileCell* tileCell, TileCell* nextTi
 	}
 
 	return heuristic;
+}
+
+float PathfindingState::CalcComplectHeuristic(TileCell* nextTileCell, TileCell* targetTileCell)
+{
+	int distanceW = nextTileCell->GetTileX() - targetTileCell->GetTileX();
+	int distanceH = nextTileCell->GetTileY() - targetTileCell->GetTileY();
+
+	distanceW = distanceW * distanceW;
+	distanceH = distanceH * distanceH;
+
+	float distance = (float)((double)distanceW + (double)distanceH);
+	return distance;
+}
+
+float PathfindingState::CalcAStarHeuristic(float distanceFromStart, TileCell* nextTileCell, TileCell* targetTileCell)
+{
+	return distanceFromStart + CalcComplectHeuristic(nextTileCell, targetTileCell);
 }

@@ -88,7 +88,7 @@ void Map::Init()
 						TileObject* tileObject = new TileObject(componentName, _spriteList[index], x, row);
 						switch (index)
 						{
-						case 94:
+						case 43:
 							tileObject->SetDistanceWeight(0.5f);
 							break;
 						case 158:
