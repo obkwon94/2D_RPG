@@ -66,4 +66,7 @@ public:
 
 	float GetHeuristic() { return _heuristic; }
 	void SetHeuristic(float heuristic) { _heuristic = heuristic; }
+
+
+
 };

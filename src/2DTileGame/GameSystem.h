@@ -73,11 +73,24 @@ public:
 private:
 	eKeyState _keyState[256];
 
+	bool _isMouseDown;
+	int _mouseX;
+	int _mouseY;
+
 public:
 	void InitInput();
+
+	void MouseDown(int mouseX, int mouseY);
+	void MouseUp();
+	bool IsMouseDown() { return _isMouseDown; }
+	int GetMouseX() { return _mouseX; }
+	int GetMouseY() { return _mouseY; }
+
 	void KeyDown(unsigned int keyCode);
 	void KeyUp(unsigned int keyCode);
 	bool IsKeyDown(unsigned int keyCode);
+
+
 
 
 	// Game

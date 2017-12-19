@@ -85,4 +85,5 @@ void PathfindingMoveState::Start()
 void PathfindingMoveState::Stop()
 {
 	State::Stop();
+	_character->ClearPathTileCellStack();
 }

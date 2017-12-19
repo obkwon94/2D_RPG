@@ -27,6 +27,7 @@ GameSystem::GameSystem()
 	_frameTime = 0.0f;
 
 	//_npcCount = 0;
+	_isMouseDown = false;
 }
 
 GameSystem::~GameSystem()
@@ -187,8 +188,8 @@ bool GameSystem::InitMainWindow(HINSTANCE hInstance, int nCmdShow)
 		style,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
-		CW_USEDEFAULT,
-		CW_USEDEFAULT,
+		_clientWidth,
+		_clientHeight,
 		0,
 		0,
 		hInstance,
@@ -310,6 +311,19 @@ void GameSystem::InitInput()
 
 }
 
+void GameSystem::MouseDown(int mouseX, int mouseY)
+{
+	_isMouseDown = true;
+
+	_mouseX = mouseX;
+	_mouseY = mouseY;
+}
+
+void GameSystem::MouseUp()
+{
+	_isMouseDown = false;
+}
+
 void GameSystem::KeyDown(unsigned int keyCode)
 {
 	_keyState[keyCode] = eKeyState::KEY_DOWN;
@@ -329,11 +343,19 @@ bool GameSystem::IsKeyDown(unsigned int keyCode)
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	int mouseX;
+	int mouseY;
 	switch (msg)
 	{
 	case WM_LBUTTONDOWN:
+		mouseX = LOWORD(lParam);
+		mouseY = HIWORD(lParam);
+		GameSystem::GetInstance().MouseDown(mouseX, mouseY);
 		return 0;
 
+	case WM_LBUTTONUP:
+		GameSystem::GetInstance().MouseUp();
+		return 0;
 	case WM_KEYDOWN:
 		if (VK_ESCAPE == wParam)
 		{
