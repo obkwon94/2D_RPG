@@ -61,7 +61,7 @@ void Monster::UpdateAI(float deltaTime)
 	}
 }
 
-Component*  Monster::Collision(std::list<Component*>& collisionList)
+Component* Monster::Collision(std::list<Component*>& collisionList)
 {
 	for (std::list<Component*>::iterator it = collisionList.begin(); it != collisionList.end(); it++)
 	{

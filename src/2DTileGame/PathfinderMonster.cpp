@@ -14,5 +14,10 @@ PathfinderMonster::~PathfinderMonster()
 
 void PathfinderMonster::UpdateAI(float deltaTime)
 {
+	Monster::UpdateAI(deltaTime);
+}
 
+Component* PathfinderMonster::Collision(std::list<Component*>& collisionList)
+{
+	Monster::Collision(collisionList);
 }

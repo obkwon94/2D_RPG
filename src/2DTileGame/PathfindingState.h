@@ -38,15 +38,11 @@ public:
 	{
 		bool operator()(sPathCommand& a, sPathCommand& b)
 		{
-			//return a->GetDistanceFromStart() > b->GetDistanceFromStart();
-			//return a->GetHeuristic() > b->GetHeuristic();
 			return a.heuristic > b.heuristic;
 		}
 	};
 
-private:
-	//std::queue<TileCell*> _pathfindingTileQueue;
-	//std::priority_queue<TileCell*, std::vector<TileCell*>, compare> _pathfindingTileQueue;
+protected:
 	std::priority_queue<sPathCommand, std::vector<sPathCommand>, compare> _pathfindingTileQueue;
 	TileCell* _targetTileCell;
 	eUpdateState _updateState;

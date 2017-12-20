@@ -21,10 +21,10 @@ void PathfinderStageLoader::CreateComponents(std::wstring mapName)
 	StageLoader::CreateComponents(mapName);
 
 	// 1개의 몬스터 생성
-	/*
+	
 	Component* monster = new PathfinderMonster(L"pathfindermonster", L"monster", L"char_sprite_02");
 	_stage->AddStageComponent(monster);
-	*/
+	
 
 	// 1개의 플레이어 생성 (추후 길찾기 전용 플레이어)
 	Player* player = new PathfinderPlayer(L"player", L"player", L"player");

@@ -1,6 +1,9 @@
-﻿  PathfindingState.cpp
+﻿  PathfinderStageLoader.cpp
 c:\kob\2dtilegame\src\2dtilegame\globaltype.h(16): warning C4091: 'typedef ': 변수를 선언하지 않으면 'TilePosition' 왼쪽은 무시됩니다.
-c:\kob\2dtilegame\src\2dtilegame\pathfindingstate.cpp(100): warning C4996: 'swprintf': function has been changed to conform with the ISO C standard, adding an extra character count parameter. To use the traditional Microsoft version, set _CRT_NON_CONFORMING_SWPRINTFS.
-  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\corecrt_wstdio.h(1822): note: 'swprintf' 선언을 참조하십시오.
+  PathfinderMonster.cpp
+c:\kob\2dtilegame\src\2dtilegame\globaltype.h(16): warning C4091: 'typedef ': 변수를 선언하지 않으면 'TilePosition' 왼쪽은 무시됩니다.
+  Monster.cpp
+c:\kob\2dtilegame\src\2dtilegame\globaltype.h(16): warning C4091: 'typedef ': 변수를 선언하지 않으면 'TilePosition' 왼쪽은 무시됩니다.
+  코드를 생성하고 있습니다...
   2DTileGame.vcxproj -> C:\kob\2DTileGame\src\Debug\2DTileGame.exe
   2DTileGame.vcxproj -> C:\kob\2DTileGame\src\Debug\2DTileGame.pdb (Partial PDB)

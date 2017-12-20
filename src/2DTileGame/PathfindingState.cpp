@@ -61,9 +61,7 @@ void PathfindingState::Start()
 		}
 	}
 
-	TileCell* startTileCell = map->GetTileCell(
-		_character->GetTileX(), _character->GetTileY()
-	);
+	TileCell* startTileCell = map->GetTileCell(_character->GetTileX(), _character->GetTileY());
 	//_pathfindingTileQueue.push(startTileCell);
 	sPathCommand newCommand;
 	newCommand.heuristic = 0.0f;
@@ -97,7 +95,7 @@ void PathfindingState::UpdatePathfinding()
 			command.tileCell->PathFinded();
 
 			wchar_t msg[256];
-			swprintf(msg, L"current tile %d, %d / %d, %d\n",
+			swprintf(msg, L"current tile %d, %d / %d, %d\n", 
 				command.tileCell->GetTileX(), command.tileCell->GetTileY(), _targetTileCell->GetTileX(), _targetTileCell->GetTileY());
 			OutputDebugString(msg);
 
@@ -131,7 +129,6 @@ void PathfindingState::UpdatePathfinding()
 							monster->SetDirection(eDirection::UP);
 						}
 					}
-					
 				}
 				*/
 
@@ -182,7 +179,7 @@ void PathfindingState::UpdatePathfinding()
 							!(nextTileCell->GetTileX() == _character->GetTileX() && nextTileCell->GetTileY() == _character->GetTileY())
 							)
 						{
-							GameSystem::GetInstance().GetStage()->CreatePathfinderNPC(nextTileCell);
+							//GameSystem::GetInstance().GetStage()->CreatePathfinderNPC(nextTileCell);
 						}
 					}
 					else
@@ -211,18 +208,10 @@ void PathfindingState::UpdateBuildPath()
 	//거꾸로돌아가면서 길을 도출한다.
 	if (NULL != _reverseTileCell)
 	{
-		/*
-		if (_reverseTileCell->GetTileX() != _targetTileCell->GetTileX() ||
-			_reverseTileCell->GetTileY() != _targetTileCell->GetTileY())
-		{
-			GameSystem::GetInstance().GetStage()->CreatePathfindingMark(_reverseTileCell);
-			_character->PushPathTileCell(_reverseTileCell);
-		}
-		*/
-		GameSystem::GetInstance().GetStage()->CreatePathfindingMark(_reverseTileCell);
+		//GameSystem::GetInstance().GetStage()->CreatePathfindingMark(_reverseTileCell);
 		_character->PushPathTileCell(_reverseTileCell);
 		_reverseTileCell = _reverseTileCell->GetPrevPathfindingCell();
-		
+	
 	}
 	else
 	{
