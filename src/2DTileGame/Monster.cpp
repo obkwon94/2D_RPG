@@ -26,10 +26,11 @@ void Monster::UpdateAI(float deltaTime)
 	std::vector<eComponentType> compareTypeList;
 	compareTypeList.push_back(eComponentType::CT_NPC);
 	compareTypeList.push_back(eComponentType::CT_PLAYER);
-	Component* findEnemy = ComponentSystem::GetInstance().FindComponentInRange(map, this, 4, compareTypeList);
+	Component* findEnemy = ComponentSystem::GetInstance().FindComponentInRange(map, this, 7, compareTypeList);
 
 	if (NULL != findEnemy)
 	{
+		/*
 		// 추격 방향 설정
 		eDirection direction = eDirection::NONE;
 		if (findEnemy->GetTileX() < _tileX)
@@ -54,11 +55,25 @@ void Monster::UpdateAI(float deltaTime)
 			_currentDirection = direction;
 			_state->NextState(eStateType::ET_MOVE);
 		}
+		*/
+		
+		int targetX = findEnemy->GetTileX();
+		int targetY = findEnemy->GetTileY();
+
+		TileCell* targetTileCell = GameSystem::GetInstance().GetStage()->GetMap()->FindTileCellWithMousePosition(targetX, targetY);
+
+		//찾은 타일 셀이 널이 아니면, 목표로 설정한 후 길을 찾는다.
+		if (NULL != targetTileCell)
+		{
+			SetTargetTileCell(targetTileCell);
+		}
+		
 	}
 	else
 	{
 		Character::UpdateAI(deltaTime);
 	}
+
 }
 
 Component* Monster::Collision(std::list<Component*>& collisionList)

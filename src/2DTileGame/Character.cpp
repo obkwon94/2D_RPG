@@ -15,6 +15,7 @@
 #include "DefenseState.h"
 #include "DeadState.h"
 #include "MeetState.h"
+#include "PathfindingImmediateState.h"
 
 #include "Character.h"
 
@@ -157,6 +158,7 @@ void Character::InitState()
 {
 	ReplaceState(eStateType::ET_IDLE, new IdleState());
 	ReplaceState(eStateType::ET_MOVE, new MoveState());
+	ReplaceState(eStateType::ET_PATHFINDING, new PathfindingImmediateState());
 	ReplaceState(eStateType::ET_ATTACK, new AttackState());
 	ReplaceState(eStateType::ET_MEET, new MeetState());
 	ReplaceState(eStateType::ET_DEFENSE, new DefenseState());

@@ -4,6 +4,7 @@
 #include "State.h"
 
 class Character;
+class TileCell;
 
 class PathfindingMoveState : public State
 {
